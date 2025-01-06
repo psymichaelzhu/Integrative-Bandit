@@ -79,7 +79,7 @@ Social cover story, numeric reward, 6 trials, 2 arms.\
 1 context (spaceship state), 2 values of armCategorical (shape), 1 value of armOrdered (number of eyes).\
 Different arms have independent rewards.\
 Rewards are sampled around the medium level (50), meaning all rewards will not be too high or too low.\
-**Different arms have different number of forced choices (sampled from0, 1, 3), causing asymmetric information among them.**\
+**Different arms have different number of forced choices (sampled from 0, 1, 3), causing asymmetric information among them.**\
 Low noise ($\sigma = 10$) is applied to all arms.
 :::
 
