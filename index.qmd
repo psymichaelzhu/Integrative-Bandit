@@ -379,7 +379,7 @@ For different colors, the change pattern varies.
 
 ## 3.3 Setup with UI
 
-### Example 1: Classic Multi-Armed Bandit
+### Example 1: Color-based Stationary Bandit
 ``` python
 {
 
