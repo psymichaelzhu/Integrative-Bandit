@@ -22,7 +22,7 @@ In this section, we will go through some basic attributes of bandit task.
     -   `contingent`: Feedback is given only for the chosen arm
     -   `full`: Feedback is given for every arm whether it is chosen or not
 
-## 1.3 Setup with UI {#basic-config-setup-with-ui}
+## 1.3 Setup in JATOS {#basic-config-setup-with-ui}
 
 ``` python
 {
@@ -105,7 +105,7 @@ For example, let's say there are 5 trials. A trial-based feature `galaxy` takes 
 According to the matrix, in the 1st and 5th trial, the galaxy is *vertical ellipse*; in the 2nd trial, the galaxy is *circle*; in the 3rd and 4th trial, the galaxy is *horizontal ellipse*.
 :::
 
-## 2.3 Setup with UI
+## 2.3 Setup in JATOS
 
 ``` python
 {
@@ -377,7 +377,7 @@ For each color, the rewards change across trials smoothly.\
 For different colors, the change pattern varies.
 :::
 
-## 3.3 Setup with UI
+## 3.3 Setup in JATOS
 
 ### Example 1: Color-based Stationary Bandit
 ``` python
@@ -499,7 +499,7 @@ In social/nonsocial games:
 ![Additional Manipulation in Nonsocial Game](img/nonsocial_addtional.jpg)
 :::
 
-## 4.3 Setup with UI {#manipulation-config-setup-with-ui}
+## 4.3 Setup in JATOS {#manipulation-config-setup-with-ui}
 
 ``` python
 {
