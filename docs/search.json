@@ -1,0 +1,499 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Integrative Bandit",
+    "section": "",
+    "text": "In this section, we will go through some basic attributes of bandit task.\n\n\n\n\nNUM_TRIALS: Number of trials\nNUM_ARMS: Number of arms\nCOVER_STORY: Cover story of the task\n\nsocial: Alien communication\nnonsocial: Planet travel\n\nREWARD_TYPE: Type of reward\n\nnumeric: Reward is an integer between 0 and 100 (inclusive), drawn from a Gaussian distribution, whose mean is given by the reward matrix.\nbinary: Reward is either 0 or 1, following a Bernoulli distribution. Reward probability is given by the reward matrix.\n\nFEEDBACK: (removed from the current version) How to provide feedback in a trial\n\ncontingent: Feedback is given only for the chosen arm\nfull: Feedback is given for every arm whether it is chosen or not\n\n\n\n\n\n{\n    \"TASK\": \"multi-arm bandit\",\n    \"NUM_TRIALS\": 40,\n    \"NUM_ARMS\": 4,\n    \"COVER_STORY\": \"nonsocial\",\n    \"REWARD_TYPE\": \"binary\"\n}\nHere, we set a multi-arm bandit task with 40 trials and 4 arms. The cover story is nonsocial, collecting water from planets. The reward type is binary."
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "IntegrativeBandit",
+    "section": "4.1 Overview",
+    "text": "4.1 Overview\nIn this section, we will go through setup of two manipulations that will influence decision-making in bandit task, but not directly through the reward matrix."
+  },
+  {
+    "objectID": "index.html#conceptual-introduction",
+    "href": "index.html#conceptual-introduction",
+    "title": "IntegrativeBandit",
+    "section": "4.2 Conceptual Introduction",
+    "text": "4.2 Conceptual Introduction\n\n4.2.1 Manipulation Aspects\n\nInformation: (Horizontal task, Wilson et al., 2014) Information is manipulated through chosen count in the forced choice phase. Being chosen more brings more information.\nNoise: (Two-armed bandit task, Gershman, 2018) Noise is manipulated through the variance level of the reward generation process. Larger variance means more noise.\nCost: (Search task, Bhatia et al., 2021) The cost is manipulated through the price of sampling an arm (can be regarded as a discount of reward mean). Higher price means higher cost.\n\n[!NOTE] Noise and cost manipulation are only available for numerical reward type.\n### 4.2.2 Manipulation Levels There are four possible levels of each manipulation. - “None”: N = 0 - “Low”: N = 1 - “Medium”: N = 5 - “High”: N = 10 For Information, N is the number of forced choices; for Noise and Cost, N is the variance and price of the reward generation process. ### 4.2.3 Within-session vs. Between-session Asymmetry Those manipulations can be asymmetric between sessions, being identical among arms but different across sessions (e.g. Session1 has high noise than Session2). In this case, Level field needs to be specified. The manipulation for each arm will be set to the Level value. Or they can be asymmetric within session, being different among arms (e.g. Arm1 has high information than Arm2). In this case, Level field is not needed. The manipulation for each arm is sampled from the manipulation level list. [!NOTE] The manipulations are always consistent within a session, across different trials.\n\n\n4.2.4 Availability to Participants\nAll of those manipulations can be explicitly informed to participants. For example, by showing participants the variance of each arm, they will know the noise levels. Or manipulations can be hidden from participants, in which case participants can only infer the levels based on their own experience. [!NOTE] Information manipulation (forced choice) can only be explicit. Noise is usually hidden; while cost is usually explicit."
+  },
+  {
+    "objectID": "index.html#setup-with-ui",
+    "href": "index.html#setup-with-ui",
+    "title": "Integrative Bandit",
+    "section": "2.3 Setup with UI",
+    "text": "2.3 Setup with UI\n{\n    \"allVarInfo\": {\n    \"context\": {\n      \"name\": \"context\", # in nonsocial story, galaxy\n      \"type\": \"trial\", # trial-based feature\n      \"numberLevels\": 3\n    },\n    \"armCategorical\": {\n      \"name\": \"armCategorical\", # color\n      \"type\": \"arm\", # arm-based feature\n      \"numberLevels\": 2\n    },\n    \"armOrdered\": {\n      \"name\": \"armOrdered\", # number of stripes\n      \"type\": \"arm\",\n      \"numberLevels\": 2\n    }\n  },\n}\nHere, we set an environment with 3 states of galaxy. Planets have 2 colors and 1~2 stripes.\n\n\n\n\n\n\nNote\n\n\n\nDefault features (trial, arm) will be automatically set up according to NUM_TRIALS and NUM_ARMS."
+  },
+  {
+    "objectID": "index.html#overview-1",
+    "href": "index.html#overview-1",
+    "title": "IntegrativeBandit",
+    "section": "4.1 Overview",
+    "text": "4.1 Overview\nIn this section, we will go through setup of three manipulations that will influence the bandit task performance, but not directly through the reward matrix."
+  },
+  {
+    "objectID": "index.html#conceptual-introduction-1",
+    "href": "index.html#conceptual-introduction-1",
+    "title": "IntegrativeBandit",
+    "section": "4.2 Conceptual Introduction",
+    "text": "4.2 Conceptual Introduction\n\n4.2.1 Manipulation Aspects\n\nInformation: (Horizontal task, Wilson et al., 2014) Information is manipulated through chosen count in the forced choice phase. Being chosen more brings more information.\nNoise: (Two-armed bandit task, Gershman, 2018) Noise is manipulated through the variance level of the reward generation process. Larger variance means more noise.\nCost: (Search task, Bhatia et al., 2021) The cost is manipulated through the price of sampling an arm (can be regarded as a discount of reward mean). Higher price means higher cost.\n\n\n[!NOTE] Noise and cost manipulation are only available for numerical reward type. ### 4.2.2 Manipulation Levels There are four possible levels of each manipulation. - “None”: N = 0 - “Low”: N = 1 - “Medium”: N = 5 - “High”: N = 10 For Information, N is the number of forced choices; for Noise and Cost, N is the variance and price of the reward generation process. ### 4.2.3 Within-session vs. Between-session Asymmetry Those manipulations can be asymmetric between sessions, being identical among arms but different across sessions (e.g. Session1 has high noise than Session2). In this case, Level field needs to be specified. The manipulation for each arm will be set to the Level value. Or they can be asymmetric within session, being different among arms (e.g. Arm1 has high information than Arm2). In this case, Level field is not needed. The manipulation for each arm is sampled from the manipulation level list. [!NOTE] The manipulations are always consistent within a session, across different trials.\n\n\n\n4.2.4 Availability to Participants\nAll of those manipulations can be explicitly informed to participants. For example, by showing participants the variance of each arm, they will know the noise levels. Or manipulations can be hidden from participants, in which case participants can only infer the levels based on their own experience. &gt; [!NOTE] &gt; Information manipulation (forced choice) can only be explicit. &gt; Noise is usually hidden; while cost is usually explicit."
+  },
+  {
+    "objectID": "index.html#setup-with-ui-1",
+    "href": "index.html#setup-with-ui-1",
+    "title": "Integrative Bandit",
+    "section": "3.3 Setup with UI",
+    "text": "3.3 Setup with UI\n\nExample 1: Classic Multi-Armed Bandit\n{\n\n    \"allRewardInfo\": [\n    { \n      \"mappingStructure\": [\n        \"arm\" # mapping structure: arm_only\n      ],\n      \"mappingFunction\": {\n        \"generalization\": \"independent\", # mapping function: independent   \n        \"level\": \"medium\" # sampling acround medium level (50)\n      },\n      \"primaryFeature\": \"armCategorical\", # primary feature: armCategorical\n      \"secondaryFeature\": \"\" # no secondary feature since it's arm_only\n    }\n  ],\n}\nThe reward independently changes between armCategorical values, but the mapping is the consistent across contexts and trials.\nFor example, red arm yields 81, and orange arm yields 35, no matter what galaxy or trial it is.\n\n\nExample 2: Color-dependent Non-stationary Bandit\n{\n\n    \"allRewardInfo\": [ \n    { \n      \"mappingStructure\": [\n        \"trial\",\n        \"arm\" # mapping structure: trial_on_arm\n      ],\n      \"mappingFunction\": {\n        \"generalization\": \"smooth\", # mapping function: smooth   \n        \"level\": \"medium\" # sampling acround medium level (50)\n      },\n      \"primaryFeature\": \"trial\", # primary feature: trial\n      \"secondaryFeature\": \"armCategorical\" # secondary feature: armCategorical, color\n    }\n  ],\n}\nFor each armCategorical (color), the reward change smoothly across trial values; while different armCategorical (color) values have independent mappings across trial values.\nFor example, for the red planet, its reward decreases from 59 to 15 across trials; for the orange planet, its reward increases from 42 to 46 across trials.\n\n\nExample 3: Complex Reward Matrix\nWe can also set up a complex reward matrix with multiple mapping information:\n{\n\"allRewardInfo\": [ # a list of mapping info\n    { #first mapping info\n      ...\n    },\n    { #second mapping info\n      ...\n    }\n  ],\n}\nIn this case, the reward matrix is the average of the two component matrices."
+  },
+  {
+    "objectID": "index.html#overview-2",
+    "href": "index.html#overview-2",
+    "title": "IntegrativeBandit",
+    "section": "4.1 Overview",
+    "text": "4.1 Overview\nIn this section, we will go through setup of three manipulations that will influence the bandit task performance, but not directly through the reward matrix."
+  },
+  {
+    "objectID": "index.html#conceptual-introduction-2",
+    "href": "index.html#conceptual-introduction-2",
+    "title": "IntegrativeBandit",
+    "section": "4.2 Conceptual Introduction",
+    "text": "4.2 Conceptual Introduction\n\n4.2.1 Manipulation Aspects\n\nInformation: (Horizontal task, Wilson et al., 2014) Information is manipulated through chosen count in the forced choice phase. Being chosen more brings more information.\nNoise: (Two-armed bandit task, Gershman, 2018) Noise is manipulated through the variance level of the reward generation process. Larger variance means more noise.\nCost: (Search task, Bhatia et al., 2021) The cost is manipulated through the price of sampling an arm (can be regarded as a discount of reward mean). Higher price means higher cost.\n\n\n[!NOTE] Noise and cost manipulation are only available for numerical reward type. ### 4.2.2 Manipulation Levels There are four possible levels of each manipulation. - “None”: N = 0 - “Low”: N = 1 - “Medium”: N = 5 - “High”: N = 10 For Information, N is the number of forced choices; for Noise and Cost, N is the variance and price of the reward generation process. ### 4.2.3 Within-session vs. Between-session Asymmetry Those manipulations can be asymmetric between sessions, being identical among arms but different across sessions (e.g. Session1 has high noise than Session2). In this case, Level field needs to be specified. The manipulation for each arm will be set to the Level value. Or they can be asymmetric within session, being different among arms (e.g. Arm1 has high information than Arm2). In this case, Level field is not needed. The manipulation for each arm is sampled from the manipulation level list. [!NOTE] The manipulations are always consistent within a session, across different trials.\n\n\n\n4.2.4 Availability to Participants\nAll of those manipulations can be explicitly informed to participants. For example, by showing participants the variance of each arm, they will know the noise levels. Or manipulations can be hidden from participants, in which case participants can only infer the levels based on their own experience. &gt; [!NOTE] &gt; Information manipulation (forced choice) can only be explicit. &gt; Noise is usually hidden; while cost is usually explicit."
+  },
+  {
+    "objectID": "index.html#setup-with-ui-2",
+    "href": "index.html#setup-with-ui-2",
+    "title": "IntegrativeBandit",
+    "section": "4.3 Setup with UI",
+    "text": "4.3 Setup with UI\n[[Pasted image 20241209085126.png]] - Pattern specifies whether the manipulation is the same or different among arms. - “Equal”: Identical among arms, equal to Level. - “Unequal”: Different among arms, sampled from the manipulation level list (0, 1, 5, 10) - Level field is only available when Pattern = “Equal”. It determines the level of the manipulation. - Explicitly Provided: Only for noise and cost manipulation. Whether the manipulation is explicitly informed to participants. - # Forced Choice: Only for information manipulation with Pattern = “Unequal”. It determines the total number of forced choices in the forced choice phase. The samples will be scaled to avoid undesired excessive forced choices. For example, if there are only 10 trials, it’s easy for the sum of unequal samples to exceed the total trial number."
+  },
+  {
+    "objectID": "index.html#overview-3",
+    "href": "index.html#overview-3",
+    "title": "IntegrativeBandit",
+    "section": "4.1 Overview",
+    "text": "4.1 Overview\nIn this section, we will go through setup of three manipulations that will influence the bandit task performance, but not directly through the reward matrix."
+  },
+  {
+    "objectID": "index.html#conceptual-introduction-3",
+    "href": "index.html#conceptual-introduction-3",
+    "title": "IntegrativeBandit",
+    "section": "4.2 Conceptual Introduction",
+    "text": "4.2 Conceptual Introduction\n\n4.2.1 Manipulation Aspects\n\nInformation: (Horizontal task, Wilson et al., 2014) Information is manipulated through chosen count in the forced choice phase. Being chosen more brings more information.\nNoise: (Two-armed bandit task, Gershman, 2018) Noise is manipulated through the variance level of the reward generation process. Larger variance means more noise.\nCost: (Search task, Bhatia et al., 2021) The cost is manipulated through the price of sampling an arm (can be regarded as a discount of reward mean). Higher price means higher cost.\n\n\n[!NOTE] Noise and cost manipulation are only available for numerical reward type. ### 4.2.2 Manipulation Levels There are four possible levels of each manipulation. - “None”: N = 0 - “Low”: N = 1 - “Medium”: N = 5 - “High”: N = 10 For Information, N is the number of forced choices; for Noise and Cost, N is the variance and price of the reward generation process. ### 4.2.3 Within-session vs. Between-session Asymmetry Those manipulations can be asymmetric between sessions, being identical among arms but different across sessions (e.g. Session1 has high noise than Session2). In this case, Level field needs to be specified. The manipulation for each arm will be set to the Level value. Or they can be asymmetric within session, being different among arms (e.g. Arm1 has high information than Arm2). In this case, Level field is not needed. The manipulation for each arm is sampled from the manipulation level list. [!NOTE] The manipulations are always consistent within a session, across different trials.\n\n\n\n4.2.4 Availability to Participants\nAll of those manipulations can be explicitly informed to participants. For example, by showing participants the variance of each arm, they will know the noise levels. Or manipulations can be hidden from participants, in which case participants can only infer the levels based on their own experience. &gt; [!NOTE] &gt; Information manipulation (forced choice) can only be explicit. &gt; Noise is usually hidden; while cost is usually explicit."
+  },
+  {
+    "objectID": "index.html#setup-with-ui-3",
+    "href": "index.html#setup-with-ui-3",
+    "title": "IntegrativeBandit",
+    "section": "4.3 Setup with UI",
+    "text": "4.3 Setup with UI\n[[Pasted image 20241209085126.png]] - Pattern specifies whether the manipulation is the same or different among arms. - “Equal”: Identical among arms, equal to Level. - “Unequal”: Different among arms, sampled from the manipulation level list (0, 1, 5, 10) - Level field is only available when Pattern = “Equal”. It determines the level of the manipulation. - Explicitly Provided: Only for noise and cost manipulation. Whether the manipulation is explicitly informed to participants. - # Forced Choice: Only for information manipulation with Pattern = “Unequal”. It determines the total number of forced choices in the forced choice phase. The samples will be scaled to avoid undesired excessive forced choices. For example, if there are only 10 trials, it’s easy for the sum of unequal samples to exceed the total trial number."
+  },
+  {
+    "objectID": "index.html#basic-config-overview",
+    "href": "index.html#basic-config-overview",
+    "title": "Integrative Bandit",
+    "section": "",
+    "text": "In this section, we will go through some basic attributes of bandit task."
+  },
+  {
+    "objectID": "index.html#basic-config-conceptual-intro",
+    "href": "index.html#basic-config-conceptual-intro",
+    "title": "Integrative Bandit",
+    "section": "",
+    "text": "NUM_TRIALS: Number of trials\nNUM_ARMS: Number of arms\nCOVER_STORY: Cover story of the task\n\nsocial: Alien communication\nnonsocial: Planet travel\n\nREWARD_TYPE: Type of reward\n\nnumeric: Reward is an integer between 0 and 100 (inclusive), drawn from a Gaussian distribution, whose mean is given by the reward matrix.\nbinary: Reward is either 0 or 1, following a Bernoulli distribution. Reward probability is given by the reward matrix.\n\nFEEDBACK: (removed from the current version) How to provide feedback in a trial\n\ncontingent: Feedback is given only for the chosen arm\nfull: Feedback is given for every arm whether it is chosen or not"
+  },
+  {
+    "objectID": "index.html#basic-config-conceptual-introduction",
+    "href": "index.html#basic-config-conceptual-introduction",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "NumberTrial: Number of trials\nNumberArm: Number of arms\nRewardType: Type of reward\n\nnumerical: Reward is an integer between 0 and 100 (inclusive), drawn from a Gaussian distribution, whose mean is given by the reward matrix.\nbinary: Reward is either 0 or 1, following a Bernoulli distribution. Reward probability is given by the reward matrix.\n\nFeedback: How to provide feedback in a trial\n\ncontingent: Feedback is given only for the chosen arm\nfull: Feedback is given for every arm whether it is chosen or not\n\nCoverStory: Cover story of the task\n\nsocial: Trading with aliens\nnon-social: Mining at ores"
+  },
+  {
+    "objectID": "index.html#basic-config-setup-with-ui",
+    "href": "index.html#basic-config-setup-with-ui",
+    "title": "Integrative Bandit",
+    "section": "",
+    "text": "{\n    \"TASK\": \"multi-arm bandit\",\n    \"NUM_TRIALS\": 40,\n    \"NUM_ARMS\": 4,\n    \"COVER_STORY\": \"nonsocial\",\n    \"REWARD_TYPE\": \"binary\"\n}\nHere, we set a multi-arm bandit task with 40 trials and 4 arms. The cover story is nonsocial, collecting water from planets. The reward type is binary."
+  },
+  {
+    "objectID": "index.html#feature-config-overview",
+    "href": "index.html#feature-config-overview",
+    "title": "Integrative Bandit",
+    "section": "2.1 Overview",
+    "text": "2.1 Overview\nIn this section, we will discuss the features in bandit tasks.\nFeatures help agents distinguish different contexts and arms, facilitating learning.\nThe setup determines how features are allocated across trials or arms, which is critical for stimuli presentation and reward generation."
+  },
+  {
+    "objectID": "index.html#feature-config-conceptual-intro",
+    "href": "index.html#feature-config-conceptual-intro",
+    "title": "Integrative Bandit",
+    "section": "2.2 Conceptual Introduction",
+    "text": "2.2 Conceptual Introduction\n\n2.2.1 Feature Type\nFeatures can be either trial-based or arm-based:\n\nTrial-based feature: Features that vary across trials, distinguishing different circumstances.\n\nArm-based feature: Features vary among arms, distinguishing different options.\n\n\n\n\n\n\n\nExample\n\n\n\nIn our (nonsocial/social) task, there is one trial-based feature, context (galaxy/spaceship).\nThere are two arm-based features, armCategorical (color of planets/shape of aliens) and armOrdered (number of stripes on planets/number of eyes on aliens).\n\n\n\nNonsocial Feature Example\n\n\n\n\n\nSocial Feature Example\n\n\n\n\n\n\n2.2.2 Values of Feature\nEach feature can take multiple values.\nThese values describe all possible instances of the feature that participants may encounter during the experiment.\n\n\n\n\n\n\nNote\n\n\n\nTrial is the default trial-based feature, with values corresponding to trial indices that increment as the experiment progresses.\nArm is the default arm-based feature, with values corresponding to arm indices that increase from left to right.\n\n\n\n\n\n\n\n\nExample\n\n\n\n In this example, color (2 values) and numberStripe (2 values) distinguish planets (arms), making them arm-based features along with the arm index arm (4 values).\ngalaxy (3 values, totally 3 states) distinguishes contexts, making it a trial-based feature along with the trial index trial (40 values, totally 40 trials).\n\n\n\n\n2.2.3 Feature Allocation\nThe feature values are randomly assigned with even proportion, e.g., 1 3 2 2 1 3.\nExcept for the default features Trial and Arm, values are allocated in ascending order.\n\n\n\n\n\n\nImplementation Details\n\n\n\nTo facilitate reward matrix generation, the allocation of a feature is represented as an one-hot encoding matrix.\nThe rows of the matrix correspond to the number of trials or arms, and the columns correspond to the number of feature values.\n\nFor example, let’s say there are 5 trials. A trial-based feature galaxy takes three values: vertical ellipse, circle, horizontal ellipse. Then the corresponding allocation matrix could be:\n\\[\\begin{bmatrix}\n1 & 0 & 0 \\\\\n0 & 1 & 0 \\\\\n0 & 0 & 1 \\\\\n0 & 0 & 1 \\\\\n1 & 0 & 0 \\\\\n\\end{bmatrix}\\]\nAccording to the matrix, in the 1st and 5th trial, the galaxy is vertical ellipse; in the 2nd trial, the galaxy is circle; in the 3rd and 4th trial, the galaxy is horizontal ellipse."
+  },
+  {
+    "objectID": "index.html#reward-config-overview",
+    "href": "index.html#reward-config-overview",
+    "title": "Integrative Bandit",
+    "section": "3.1 Overview",
+    "text": "3.1 Overview\nIn this section, we will discuss the reward structure in bandit tasks.\nThe setup generate a reward matrix based on trial-based and arm-based features."
+  },
+  {
+    "objectID": "index.html#reward-config-conceptual-intro",
+    "href": "index.html#reward-config-conceptual-intro",
+    "title": "Integrative Bandit",
+    "section": "3.2 Conceptual Introduction",
+    "text": "3.2 Conceptual Introduction\n\n3.2.1 Reward Matrix\nThe reward structure is described by the reward matrix.\nThe rows of the matrix correspond to the number of trials, and the columns correspond to the number of arms.\nThe value in each cell represents the expected reward for selecting the corresponding arm in the corresponding trial.\n\nfor numeric reward, the reward follows a \\(Gaussian\\) distribution. The value represents the reward mean.\n\nfor binary reward, the reward follows a \\(Bernoulli\\) distribution. The value represents the reward probability.\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nAll calculations of the reward matrix in the following sections are based on the scale of 0~100. When reward type is binary, the calculated matrix will be scaled to 0~1.\n\n\n\n\n\n\n\n\nExample\n\n\n\nFor instance, a numeric reward matrix may look like this:\n\\[\n\\begin{bmatrix}\n1 & 2 & 3 \\\\\n4 & 5 & 6 \\\\\n7 & 8 & 9 \\\\\n10 & 11 & 12 \\\\\n13 & 14 & 15 \\\\\n\\end{bmatrix}\n\\] It has the shape of 5 (number of trials) ×3 (number of arms).\nEach cell indicates the expected reward of drawing a specific arm in a specific trial.\nFor example, in the second trial, the third arm has the expected reward of 6: \\(E[R|T=2, A=3] = 6\\).\n\n\n\n\n3.2.2 Decompose Reward Matrix\nThe overall reward matrix determines the expected reward for each trial and arm combination.\nAs described previously, there are trial-based features across trials and arm-based features among arms.\nThose features independently or jointly contribute to the expected reward.\nThe overall reward matrix can be decomposed into component matrices based on individual features or their combinations.\n\n\n\n\n\n\nNote\n\n\n\nTo avoid complexity, when it comes to the feature combination, we only consider the combination of one trial-based feature and one arm-based feature.\n\n\n\n\n\n\n\n\nExample\n\n\n\nSuppose there are two arm-based features: color and numberStripe.\nEach feature independently contributes to the reward (e.g., red planets yields higher rewards than orange planets, and planets with more stripes yield higher rewards). Then the reward matrix is:\n\\[\nR = \\frac{R_{\\text{color}} + R_{\\text{numberStripe}}}{2}\n\\]\nHere, \\(R_{\\text{color}}\\) and \\(R_{\\text{numberStripe}}\\) are two independent component matrices describing the contribution of color and numberStripe to the expected reward.\n\n\n\n\n3.2.3 Component Matrix\nA component matrix describes the unique contribution of a specific feature or a combination of features to the expected reward.\nIt has the same shape as the overall reward matrix, with rows corresponding to the number of trials and columns corresponding to the number of arms.\nThe value in each cell represents the expected reward for drawing a specific arm in a specific trial, when only considering the certain feature or combination.\nHow a feature or combination contributes to the overall reward matrix can be understood by specifying two things:\n\nFeature allocation: How the feature values are distributed across trials and arms, has been covered in allocation matrix.\nFeature-to-reward mapping: How much reward each feature (combination) value provides, will be covered in mapping matrix.\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nThe component matrix for a feature (or combination) is generated through matrix multiplication.\nFor feature combination: \\[\nR_{trialFeature, armFeature} = A_{\\text{trialFeature}} \\cdot M_{\\text{trialFeature,armFeature}} \\cdot A_{\\text{armFeature}}^T\n\\]\nwhere:\n\n\\(R_{trialFeature, armFeature}\\): Component matrix of the feature combination, describing its unique contribution to the overall expected reward matrix.\n\n\\(A_{\\text{trialFeature}}\\): Allocation matrix of the trial-based feature across trials.\n\n\\(M_{\\text{trialFeature,armFeature}}\\): Mapping matrix, describing the expected reward for each value pair of trial-based feature and arm-based feature.\n\n\\(A_{\\text{armFeature}}^T\\): Transposed allocation matrix of the arm-based feature.\n\nFor single feature, the component matrix is constructed by using the default feature of the missing dimension:\n\nWhen considering the independent contribution of an arm-based feature, the trial dimension will take the default feature trial. \\[\nR_{armFeature} = A_{\\text{trial}} \\cdot M_{\\text{trial,armFeature}} \\cdot A_{\\text{armtFeature}}^T\n\\]\n\nSimilarly, for a trial-based feature, the arm dimension will take the default feature arm. \\[\nR_{trialFeature} = A_{\\text{trialFeature}} \\cdot M_{\\text{trialFeature,arm}} \\cdot A_{\\text{arm}}^T\n\\]\n\n\n\n\n\n\n\n\n\n\nExample\n\n\n\nFor instance, let’s say there are 5 trials and 4 arms.\nContext feature galaxy takes three values, vertical ellipse, circle, horizontal ellipse.\nArm feature color takes two values, red, orange.\nThe allocation matrix of galaxy \\(A_{galaxy}\\) is: \\[\n\\begin{bmatrix}\n1 & 0 & 0 \\\\\n0 & 1 & 0 \\\\\n0 & 0 & 1 \\\\\n1 & 0 & 0 \\\\\n0 & 1 & 0 \\\\\n\\end{bmatrix}\n\\] The allocation matrix of color \\(A_{color}\\) is: \\[\n\\begin{bmatrix}\n0 & 1 \\\\\n1 & 0 \\\\\n1 & 0 \\\\\n0 & 1 \\\\\n\\end{bmatrix}\n\\] Assume the mapping matrix for galaxy-color pair \\(M_{galaxy, color}\\) is: \\[\n\\begin{bmatrix}\n3 & 2 \\\\\n1 & 2 \\\\\n2 & 2 \\\\\n\\end{bmatrix}\n\\] The mapping matrix specifies the expected rewards for traveling to planets with specific colors given specific galaxy states.\nFor example, \\(M_{2,1}=1\\), means that when observing the circle galaxy, the expected reward of traveling to a red planet is 1.\nThe component matrix for the combination of galaxy and color \\(R_{galaxy, color}\\) can be then calculated as: \\[\nR_{galaxy, color} = A_{galaxy} \\cdot M_{galaxy, color} \\cdot A_{color}^T\n\\]\n\\[\n\\begin{bmatrix}\n2 & 3 & 3 & 2\\\\\n2 & 1 & 1 & 2\\\\\n2 & 2 & 2 & 2\\\\\n2 & 3 & 3 & 2\\\\\n2 & 1 & 1 & 2\\\\\n\\end{bmatrix}\n=\n\\begin{bmatrix}\n1 & 0 & 0 \\\\\n0 & 1 & 0 \\\\\n0 & 0 & 1 \\\\\n1 & 0 & 0 \\\\\n0 & 1 & 0\n\\end{bmatrix}\n\\cdot\n\\begin{bmatrix}\n3 & 2 \\\\\n1 & 2 \\\\\n2 & 2 \\\\\n\\end{bmatrix}\n\\cdot\n\\begin{bmatrix}\n0 & 1 \\\\\n1 & 0 \\\\\n1 & 0 \\\\\n0 & 1\n\\end{bmatrix}^T\n\\]\nThe resulting matrix \\(R_{galaxy, color}\\) describes the expected reward for selecting a specific arm in a specific trial, when only considering the galaxy-color feature pair.\nFor example, \\(R_{4,3}=3\\), means that when choosing the third arm in the fourth trial, the galaxy-color feature pair contributes 3 to the overall expected reward.\n\n\n\n\n3.2.4 Mapping Matrix\nThe mapping matrix specifies the expected reward for each combination of trial-based and arm-based feature values.\nIts rows correspond to the number of trial-based feature values, and columns correspond to the number of arm-based feature values.\nThe value in each cell represents the expected reward for a specific trial-arm feature pair.\nThe mapping matrix is determined by the mapping function and mapping structure.\n\n3.2.4.1 Mapping Function\nConsidering one feature, different feature values can be mapped to expected rewards in the following ways:\n1. identical: All feature values share the same reward.\n2. independent: Rewards for feature values are independently different.\n3. smooth(only for ordered feature): Rewards vary across feature values in a predictable (e.g. linear) way.\n\n\n\n\n\n\nImplementation Details\n\n\n\nMathematically, three types of mapping modes can be described by the unified format of Gaussian process. The key parameter is the generalization parameter \\(\\lambda\\). \\[k(x_i, x_j) = \\exp(-\\frac{(x_i - x_j)^2}{\\lambda})\\] where \\(k(x_i, x_j)\\) is the correlation between rewards at feature values \\(x_i\\) and \\(x_j\\).\n\nFor identical mapping: \\(\\lambda \\to \\infty\\), resulting in perfect correlation between any two feature values.\nFor independent mapping: \\(\\lambda \\to 0\\), resulting in zero correlation between any two feature values.\nFor smooth mapping: \\(\\lambda\\) takes a finite positive value (e.g. 5), resulting in correlation that decays with distance between feature values.\n\n\n\n\nGaussian Process Simulation\n\n\nBy default, sequence samplings are around 50 (the midpoint of 0 and 100).\nWe can also change level to change the center of Gaussian process sampling: low = 25, medium = 50, high = 75.\n\n\n\n\n3.2.4.2 Mapping Structure\nFeatures may contribute to the overall reward independently or jointly.\nSince we only consider the combination of one trial-based feature and one arm-based feature, there are four possible mapping dependencies:\n\nIndependent mapping:\n\narm_only: Rewards only depend on arm feature values.\n\ntrial_only: Rewards only depend on trial feature values.\n\n\nJoint mapping:\n\narm_on_trial: Rewards depend on arm feature values, but the mapping varies across trial feature values.\n\ntrial_on_arm: Rewards depend on trial feature values, but the mapping varies across arm feature values.\n\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nThe mapping matrix has rows corresponding to trial-based feature values, and columns corresponding to arm-based feature values.\nFor independent mapping, arm_only or context_only, a broadcasting mechanism is used:\nOne GP sequence is sampled for all values of that feature, and the resulting sequence is repeated along the default feature of the other dimension.\nFor joint mapping, arm_on_context or context_on_arm, a seeding mechanism is used:\nSampling a GP sequence for all values of the primary (conditioned) feature, while applying independent random seeds across different values of the secondary (conditioning) feature.\n\n\n\n\n\n\n\n\nExample\n\n\n\nConsider a task with 5 trials and 4 arms of 3 colors.\nIf we want rewards to be independent across colors, then feature color takes independent mapping function and arm_only mapping structure.\nThe mapping matrix \\(M_{color}\\) might be: \\[\n\\begin{bmatrix}\n81 & 35 & 42 \\\\\n81 & 35 & 42 \\\\\n81 & 35 & 42 \\\\\n81 & 35 & 42 \\\\\n81 & 35 & 42 \\\\\n\\end{bmatrix}\n\\] 5 rows for 5 trials, 3 columns for 3 colors.\nFor different colors, the rewards are independently different.\nAcross trials, the rewards of each color are consistent.\nLet’s say, we want rewards across trials to be associated, while different colors exhibit different associative patterns.\nIn that case, trial- color pair takes smooth mapping function and context_on_arm mapping structure.\nThen the mapping matrix might be: \\[\n\\begin{bmatrix}\n59 & 42 & 84 \\\\\n48 & 43 & 72 \\\\\n37 & 44 & 60 \\\\\n26 & 45 & 48 \\\\\n15 & 46 & 36 \\\\\n\\end{bmatrix}\n\\] 5 rows for 5 trials, 3 columns for 3 colors.\nFor each color, the rewards change across trials smoothly.\nFor different colors, the change pattern varies."
+  },
+  {
+    "objectID": "index.html#task-description",
+    "href": "index.html#task-description",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "There are several arms (options) available, each with an unknown reward distribution.\nEach trial, the participant can only choose one arm. When choosing an arm, the participant receives a reward based on the arm’s distribution.\nThe objective is to maximize the total reward over all trials."
+  },
+  {
+    "objectID": "index.html#task-objective",
+    "href": "index.html#task-objective",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "In this game, the participant needs to balance exploration and exploitation:\n\nExploration: Try unfamiliar options to gain more information about the reward distribution.\nExploitation: Choose the best option known to maximize current reward."
+  },
+  {
+    "objectID": "index.html#exploration-and-exploitation",
+    "href": "index.html#exploration-and-exploitation",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "In this game, the participant needs to balance exploration and exploitation:\n\nExploration: Try unfamiliar options to gain more information about the reward distribution.\nExploitation: Choose the best option known to maximize current reward."
+  },
+  {
+    "objectID": "index.html#exploration-exploitation",
+    "href": "index.html#exploration-exploitation",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "In this game, the participant needs to balance exploration and exploitation:\n\nExploration: Try unfamiliar options to gain more information about the reward distribution.\nExploitation: Choose the best option known to maximize current reward."
+  },
+  {
+    "objectID": "index.html#exploration-exploitation-tradeoff",
+    "href": "index.html#exploration-exploitation-tradeoff",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "In this game, the participant needs to balance exploration and exploitation:\n\nExploration: Try unfamiliar arms to gain information about reward distribution.\nExploitation: Choose the best arm known to maximize current reward."
+  },
+  {
+    "objectID": "index.html#variants",
+    "href": "index.html#variants",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "Beyond the classic multi-arm bandit task, where the reward distribution of each arm is independent, there are many variants of the bandit task, such as:\n\nContextual bandit (Schulz et al., 2018): Rewards of arms depend on additional contextual information.\nStructural bandit (Wu et al., 2018): Rewards are influenced by relationships between arms.\nRestless bandit (Daw et al., 2006): Reward distributions change over time.\nHorizon task (Wilson et al., 2014): Time horizon varies and forced choices are used to manipulate information symmetry."
+  },
+  {
+    "objectID": "index.html#section",
+    "href": "index.html#section",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "Generally speaking, bandit tasks can be described through three key aspects:\n\nBasic information: such as the number of arms, number of trials, and the underlying story. They define the overall structure of the task.\nRewards: such as contextual information, relationships between arms, and temporal changes. They influence reward allocation.\nDecision regulators: such as information availability or noise. They do not directly affect rewards but may compose differences between arms."
+  },
+  {
+    "objectID": "index.html#general-bandit-task",
+    "href": "index.html#general-bandit-task",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "Generally speaking, bandit tasks can be described through three key aspects:\n\nBasic information: such as the number of arms, number of trials, and the underlying story. They define the overall structure of the task.\nRewards: such as contextual information, relationships between arms, and temporal changes. They influence reward allocation.\nDecision regulators: such as information availability or noise. They do not directly affect rewards but may compose differences between arms."
+  },
+  {
+    "objectID": "index.html#in-bandit-task",
+    "href": "index.html#in-bandit-task",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "Generally speaking, bandit tasks can be described through three key aspects:\n\nBasic information: such as the number of arms, number of trials, and the underlying story. They define the overall structure of the task.\nRewards: such as contextual information, relationships between arms, and temporal changes. They influence reward allocation.\nDecision regulators: such as information availability or noise. They do not directly affect rewards but may compose differences between arms."
+  },
+  {
+    "objectID": "index.html#integrative-bandit-task",
+    "href": "index.html#integrative-bandit-task",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "Generally speaking, a bandit task can be described through three aspects:\n\nBasic setting: Such as the number of arms, number of trials, and the cover story. They described the basic elements of the task, and may have an overall impact on the behavioral patterns.\nReward setting: Such as contextual information, relationships between arms, and temporal changes. They influence the distribution of expected rewards, determining the optimal policy (choice sequence).\nNon-reward setting: Such as information, noise. They do not directly affect expected rewards (thus shouldn’t change the optimal choice sequence) but may influence the decision-making process.\n\n\n\n\n\n\n\nTip\n\n\n\nThe distinction between reward and non-reward settings can be understood through an analogy to economic decision-making:\nIn economic decision-making, expected reward determines the optimal choice, but human decisions are still influenced by factors such as risk preferences and temporal discounting, leading to actual behaviors deviating from the objectively optimal choice."
+  },
+  {
+    "objectID": "index.html#bandit-variants",
+    "href": "index.html#bandit-variants",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "Beyond the classic multi-arm bandit task, where the reward distribution of each arm is independent, there are many variants of the bandit task, such as:\n\nContextual bandit (Schulz et al., 2018): Rewards of arms depend on additional contextual information.\nStructural bandit (Wu et al., 2018): Rewards are influenced by relationships between arms.\nRestless bandit (Daw et al., 2006): Reward distributions change over time.\nHorizon task (Wilson et al., 2014): Time horizon varies and forced choices are used to manipulate information symmetry."
+  },
+  {
+    "objectID": "index.html#task-description-task-description",
+    "href": "index.html#task-description-task-description",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "There are several arms (options) available, each with an unknown reward distribution.\nEach trial, the participant can only choose one arm. When choosing an arm, the participant receives a reward based on the arm’s distribution.\nThe objective is to maximize the total reward over all trials."
+  },
+  {
+    "objectID": "index.html#task-description-bandittask-description",
+    "href": "index.html#task-description-bandittask-description",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "There are several arms (options) available, each with an unknown reward distribution.\nEach trial, the participant can only choose one arm. When choosing an arm, the participant receives a reward based on the arm’s distribution.\nThe objective is to maximize the total reward over all trials."
+  },
+  {
+    "objectID": "index.html#task-description-bandit-gametask-description",
+    "href": "index.html#task-description-bandit-gametask-description",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "There are several arms (options) available, each with an unknown reward distribution.\nEach trial, the participant can only choose one arm. When choosing an arm, the participant receives a reward based on the arm’s distribution.\nThe objective is to maximize the total reward over all trials."
+  },
+  {
+    "objectID": "index.html#task-description-bandit-game-recap-task-description",
+    "href": "index.html#task-description-bandit-game-recap-task-description",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "There are several arms (options) available, each with an unknown reward distribution.\nEach trial, the participant can only choose one arm. When choosing an arm, the participant receives a reward based on the arm’s distribution.\nThe objective is to maximize the total reward over all trials."
+  },
+  {
+    "objectID": "index.html#exploration-exploitation-tradeoff-bandit-game-recap-exploration-exploitation-tradeoff",
+    "href": "index.html#exploration-exploitation-tradeoff-bandit-game-recap-exploration-exploitation-tradeoff",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "In this game, the participant needs to balance exploration and exploitation:\n\nExploration: Try unfamiliar arms to gain information about reward distribution.\nExploitation: Choose the best arm known to maximize current reward."
+  },
+  {
+    "objectID": "index.html#bandit-variants-bandit-game-recap-bandit-variants",
+    "href": "index.html#bandit-variants-bandit-game-recap-bandit-variants",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "Beyond the classic multi-arm bandit task, where the reward distribution of each arm is independent, there are many variants of the bandit task, such as:\n\nContextual bandit (Schulz et al., 2018): Rewards of arms depend on additional contextual information.\nStructural bandit (Wu et al., 2018): Rewards are influenced by relationships between arms.\nRestless bandit (Daw et al., 2006): Reward distributions change over time.\nHorizon task (Wilson et al., 2014): Time horizon varies and forced choices are used to manipulate information symmetry."
+  },
+  {
+    "objectID": "index.html#integrative-bandit-task-bandit-game-recap-integrative-bandit-task",
+    "href": "index.html#integrative-bandit-task-bandit-game-recap-integrative-bandit-task",
+    "title": "IntegrativeBandit",
+    "section": "",
+    "text": "Generally speaking, a bandit task can be described through three aspects:\n\nBasic setting: Such as the number of arms, number of trials, and the cover story. They described the basic elements of the task, and may have an overall impact on the behavioral patterns.\nReward setting: Such as contextual information, relationships between arms, and temporal changes. They influence the distribution of expected rewards, determining the optimal policy (choice sequence).\nNon-reward setting: Such as information, noise. They do not directly affect expected rewards (thus shouldn’t change the optimal choice sequence) but may influence the decision-making process.\n\n\n\n\n\n\n\nTip\n\n\n\nThe distinction between reward and non-reward settings can be understood through an analogy to economic decision-making:\nIn economic decision-making, expected reward determines the optimal choice, but human decisions are still influenced by factors such as risk preferences and temporal discounting, leading to actual behaviors deviating from the objectively optimal choice."
+  },
+  {
+    "objectID": "index.html#bandit-game-recap-task-description",
+    "href": "index.html#bandit-game-recap-task-description",
+    "title": "Integrative Bandit Task",
+    "section": "",
+    "text": "There are several arms (options) available, each with an unknown reward distribution.\nEach trial, the participant can only choose one arm. When choosing an arm, the participant receives a reward based on the arm’s distribution.\nThe objective is to maximize the total reward over all trials."
+  },
+  {
+    "objectID": "index.html#bandit-game-recap-exploration-exploitation-tradeoff",
+    "href": "index.html#bandit-game-recap-exploration-exploitation-tradeoff",
+    "title": "Integrative Bandit Task",
+    "section": "",
+    "text": "In this game, the participant needs to balance exploration and exploitation:\n\nExploration: Try unfamiliar arms to gain information about reward distribution.\nExploitation: Choose the best arm known to maximize current reward."
+  },
+  {
+    "objectID": "index.html#bandit-game-recap-bandit-variants",
+    "href": "index.html#bandit-game-recap-bandit-variants",
+    "title": "Integrative Bandit Task",
+    "section": "",
+    "text": "Beyond the classic multi-arm bandit task, where the reward distribution of each arm is independent, there are many variants of the bandit task, such as:\n\nContextual bandit (Schulz et al., 2018): Rewards of arms depend on additional contextual information.\nStructural bandit (Wu et al., 2018): Rewards are influenced by relationships between arms.\nRestless bandit (Daw et al., 2006): Reward distributions change over time.\nHorizon task (Wilson et al., 2014): Time horizon varies and forced choices are used to manipulate information symmetry."
+  },
+  {
+    "objectID": "index.html#bandit-game-recap-integrative-bandit-task",
+    "href": "index.html#bandit-game-recap-integrative-bandit-task",
+    "title": "Integrative Bandit Task",
+    "section": "",
+    "text": "Generally speaking, a bandit task can be described through three aspects:\n\nBasic setting: Such as the number of arms, number of trials, and the cover story. They described the basic elements of the task, and may have an overall impact on the behavioral patterns.\nReward setting: Such as contextual information, relationships between arms, and temporal changes. They influence the distribution of expected rewards, determining the optimal policy (choice sequence).\nNon-reward setting: Such as information, noise. They do not directly affect expected rewards (thus shouldn’t change the optimal choice sequence) but may influence the decision-making process.\n\n\n\n\n\n\n\nTip\n\n\n\nThe distinction between reward and non-reward settings can be understood through an analogy to economic decision-making:\nIn economic decision-making, expected reward determines the optimal choice, but human decisions are still influenced by factors such as risk preferences and temporal discounting, leading to actual behaviors deviating from the objectively optimal choice."
+  },
+  {
+    "objectID": "index.html#reward-setting-reward-matrix",
+    "href": "index.html#reward-setting-reward-matrix",
+    "title": "Integrative Bandit Task",
+    "section": "2.1 Reward Matrix",
+    "text": "2.1 Reward Matrix\nThe rows of the reward matrix correspond to the number of trials, and the columns correspond to the number of arms.\nThe value in each cell represents the expected reward for selecting the corresponding arm in the corresponding trial.\n\nfor numeric reward, the reward follows a \\(Gaussian\\) distribution. The value represents the mean reward.\n\nfor binary reward, the reward follows a \\(Bernoulli\\) distribution. The value represents the reward probability.\n\nFor instance, a reward matrix may look like this:\n\\[\n\\begin{bmatrix}\n1 & 2 & 3 \\\\\n4 & 5 & 6 \\\\\n7 & 8 & 9 \\\\\n10 & 11 & 12 \\\\\n13 & 14 & 15 \\\\\n\\end{bmatrix}\n\\] It has the shape of 5 (number of trials) ×3 (number of arms).\nEach cell indicates the expected reward of drawing a specific arm in a specific trial.\nFor example, in the second trial, the third arm has the expected reward of 6: \\(E[R|T=2, A=3] = 6\\).\n\n\n\n\n\n\nImplementation Details\n\n\n\nAll calculations of the reward matrix in the following sections are based on the scale of 0~100. When reward type is binary, the calculated matrix will be scaled to 0~1."
+  },
+  {
+    "objectID": "index.html#reward-setting-reward-decomposition",
+    "href": "index.html#reward-setting-reward-decomposition",
+    "title": "Integrative Bandit Task",
+    "section": "2.2 Decompose Reward Matrix",
+    "text": "2.2 Decompose Reward Matrix"
+  },
+  {
+    "objectID": "index.html#reward-setting-de",
+    "href": "index.html#reward-setting-de",
+    "title": "Integrative Bandit Task",
+    "section": "2.2 Decompose Reward Matrix",
+    "text": "2.2 Decompose Reward Matrix"
+  },
+  {
+    "objectID": "index.html#reward-setting-decompose-reward-matrix",
+    "href": "index.html#reward-setting-decompose-reward-matrix",
+    "title": "Integrative Bandit Task",
+    "section": "2.2 Decompose Reward Matrix",
+    "text": "2.2 Decompose Reward Matrix\nThe overall reward matrix determines the expected reward for each trial and arm combination.\nAs described previously, there are context-based features across trials and arm-based features among arms.\nThose features independently or jointly contribute to the expected reward.\nThe overall reward matrix can be decomposed into component matrices based on individual features or their combinations.\n\n\n\n\n\n\nNote\n\n\n\nTo avoid complexity, when it comes to the feature combination, we only consider the combination of one context-based feature and one arm-based feature.\n\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nSuppose there are two arm-based features: color and numberStripe.\nEach feature independently contributes to the reward (e.g., red planets yields higher rewards than orange planets, and planets with more stripes yield higher rewards). Then the reward matrix is:\n\\[\nR = R_{\\text{color}} + R_{\\text{numberStripe}}\n\\]\nHere, \\(R_{\\text{color}}\\) and \\(R_{\\text{numberStripe}}\\) are two independent component matrices describing the contribution of color and numberStripe to the expected reward."
+  },
+  {
+    "objectID": "index.html#reward-setting-component-matrix",
+    "href": "index.html#reward-setting-component-matrix",
+    "title": "Integrative Bandit Task",
+    "section": "2.3 Component Matrix",
+    "text": "2.3 Component Matrix\nA component matrix describes the unique contribution of a specific feature or a combination of features to the expected reward.\nIt has the same shape as the overall reward matrix, with rows corresponding to the number of trials and columns corresponding to the number of arms.\nThe value in each cell represents the expected reward for drawing a specific arm in a specific trial, when only considering the certain feature or combination.\nHow a feature or combination contributes to the overall reward matrix can be understood as a process of two steps:\n\nFeature allocation: How the feature values are distributed across trials and arms, see allocation matrix.\nFeature-to-reward mapping: How much reward each feature value provides, see mapping matrix.\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nThe component matrix for a feature (or combination) is generated through matrix multiplication.\nFor feature combination: \\[\nR_{contextFeature, armFeature} = A_{\\text{contextFeature}} \\cdot M_{\\text{contextFeature,armFeature}} \\cdot A_{\\text{armFeature}}^T\n\\]\nwhere:\n\n\\(R_{contextFeature, armFeature}\\): Component matrix of the feature combination, describing its unique contribution to the overall expected reward matrix.\n\n\\(A_{\\text{contextFeature}}\\): Allocation matrix of the context-based feature across trials.\n\n\\(M_{\\text{contextFeature,armFeature}}\\): Mapping matrix, describing the expected reward for each value pair of context-based feature and arm-based feature.\n\n\\(A_{\\text{armFeature}}^T\\): Transposed allocation matrix of the arm-based feature.\n\nFor single feature, the component matrix is constructed by using the default feature of the missing dimension:\n\nWhen considering the independent contribution of an arm-based feature, the context dimension will take the default feature trial. \\[\nR_{armFeature} = A_{\\text{trial}} \\cdot M_{\\text{trial,armFeature}} \\cdot A_{\\text{armtFeature}}^T\n\\]\n\nSimilarly, for a context-based feature, the arm dimension will take the default feature arm. \\[\nR_{contextFeature} = A_{\\text{contextFeature}} \\cdot M_{\\text{contextFeature,arm}} \\cdot A_{\\text{arm}}^T\n\\]\n\n\n\n\n\n\n\n\n\n\nExample\n\n\n\nFor instance, let’s say there are 5 trials and 4 arms.\nContext feature galaxy takes three values, vertical ellipse, circle, horizontal ellipse, with ascending allocation.\nArm feature color takes two values, red, orange, with shuffled allocation.  Then the allocation matrix of galaxy \\(A_{galaxy}\\) is: \\[\n\\begin{bmatrix}\n1 & 0 & 0 \\\\\n0 & 1 & 0 \\\\\n0 & 0 & 1 \\\\\n1 & 0 & 0 \\\\\n0 & 1 & 0 \\\\\n\\end{bmatrix}\n\\] The allocation matrix of color \\(A_{color}\\) is: \\[\n\\begin{bmatrix}\n0 & 1 \\\\\n1 & 0 \\\\\n1 & 0 \\\\\n0 & 1 \\\\\n\\end{bmatrix}\n\\] Assume the mapping matrix for galaxy-color pair \\(M_{galaxy, color}\\) is: \\[\n\\begin{bmatrix}\n3 & 2 \\\\\n1 & 2 \\\\\n2 & 2 \\\\\n\\end{bmatrix}\n\\] The mapping matrix specifies the expected rewards for traveling to planets with specific colors given specific galaxy states.\nFor example, \\(M_{2,1}=1\\), means that when observing the circle galaxy, the expected reward of traveling to a red planet is 1.\nThe component matrix for the combination of galaxy and color \\(R_{galaxy, color}\\) can be then calculated as: \\[\nR_{galaxy, color} = A_{galaxy} \\cdot M_{galaxy, color} \\cdot A_{color}^T\n\\]\n\\[\n\\begin{bmatrix}\n2 & 3 & 3 & 2\\\\\n2 & 1 & 1 & 2\\\\\n2 & 2 & 2 & 2\\\\\n2 & 3 & 3 & 2\\\\\n2 & 1 & 1 & 2\\\\\n\\end{bmatrix}\n=\n\\begin{bmatrix}\n1 & 0 & 0 \\\\\n0 & 1 & 0 \\\\\n0 & 0 & 1 \\\\\n1 & 0 & 0 \\\\\n0 & 1 & 0\n\\end{bmatrix}\n\\cdot\n\\begin{bmatrix}\n3 & 2 \\\\\n1 & 2 \\\\\n2 & 2 \\\\\n\\end{bmatrix}\n\\cdot\n\\begin{bmatrix}\n0 & 1 \\\\\n1 & 0 \\\\\n1 & 0 \\\\\n0 & 1\n\\end{bmatrix}^T\n\\]\nThe resulting matrix \\(R_{galaxy, color}\\) describes the expected reward for selecting a specific arm in a specific trial, when only considering the galaxy-color feature pair.\nFor example, \\(R_{4,3}=3\\), means that when choosing the third arm in the fourth trial, the galaxy-color feature pair contributes 3 to the overall expected reward."
+  },
+  {
+    "objectID": "index.html#reward-config-conceptual-intro-mapping-matrix",
+    "href": "index.html#reward-config-conceptual-intro-mapping-matrix",
+    "title": "Integrative Bandit Task",
+    "section": "2.4 Mapping Matrix",
+    "text": "2.4 Mapping Matrix\nThe mapping matrix specifies the expected reward for each combination of context and arm feature values.\nIts rows correspond to the number of context-based feature values, and columns correspond to the number of arm-based feature values.\nThe value in each cell represents the expected reward for a specific context-arm feature pair.\nThe mapping matrix is determined by the mapping function and mapping dependency.\n\n3.2.4.1 Mapping Function\nConsidering one feature, the feature values can be mapped to expected rewards in the following ways:\n1. identical: All feature values share the same reward.\n2. independent: Rewards for feature values are independently different.\n3. associative(only for ordered feature): Rewards vary across feature values in a predictable way. # TODO: 统一形式 Gaussian process function learning\n\n\n\n\n\n\nImplementation Details\n\n\n\nMapping function describes how expected reward is assigned to different feature values:\n\nidentical: Sample reward once and assign it to all feature values.\nindependent: Independently sample reward for each feature value.\nassociative: Generate a reward sequence through a specific process (e.g., random walk), then assign the sequence to all feature values. The process can be one of the following:\n\nrandomwalk: A random walk process.\nlinear: Linearly monotonic change.\nexponential: Exponentially monotonic change.\n\n\n\n\n随机性 函数\n\n\n3.2.4.2 Mapping Dependency\nFeatures may contribute to the overall reward independently or jointly.\nSince we only consider the combination of one context-based feature and one arm-based feature, there are four possible mapping dependencies:\n\nIndependent mapping:\n\narm_only: Rewards only depend on arm feature values.\n\ncontext_only: Rewards only depend on context feature values.\n\n\nJoint mapping:\n\narm_on_context: Rewards depend on arm feature values, but the mapping varies across context feature values.\n\ncontext_on_arm: Rewards depend on context feature values, but the mapping varies across arm feature values.\n\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nThe mapping matrix has rows corresponding to context-based feature values, and columns corresponding to arm-based feature values.\nFor independent mapping, arm_only or context_only, a broadcasting mechanism is used:\nThe mapping function is applied to all values of the feature, and the resulting sequence is repeated along the default feature of the other dimension.\nFor joint mapping, arm_on_context or context_on_arm, a seeding mechanism is used:\nThe mapping function generates rewards for all values of the primary (conditioned) feature, while applying independent random seeds across different values of the secondary (conditioning) feature.\n\n\n\n\n\n\n\n\nExample\n\n\n\nConsider a task with 5 trials and 4 arms of 3 colors.\nIf we want rewards to be independent across colors, then feature color takes independent mapping function and arm_only mapping dependency.\nThe mapping matrix \\(M_{color}\\) might be: \\[\n\\begin{bmatrix}\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n\\end{bmatrix}\n\\] 5 rows for 5 trials, 3 columns for 3 colors.\nFor different colors, the rewards are independently different.\nAcross trials, the rewards of each color are consistent.\nLet’s say, we want rewards across trials to be associated, while different colors exhibit different associative patterns.\nIn that case, trial- color pair takes associative mapping function and context_on_arm mapping dependency.\nThen the mapping matrix might be: \\[\n\\begin{bmatrix}\n2 & 6 & 1 \\\\\n1 & 5 & 2 \\\\\n2 & 4 & 3 \\\\\n3 & 5 & 4 \\\\\n2 & 6 & 5 \\\\\n\\end{bmatrix}\n\\] 5 rows for 5 trials, 3 columns for 3 colors.\nFor each color, the rewards change across trials smoothly.\nFor different colors, the change pattern varies."
+  },
+  {
+    "objectID": "index.html#reward-setting-mapping-matrix",
+    "href": "index.html#reward-setting-mapping-matrix",
+    "title": "Integrative Bandit Task",
+    "section": "2.4 Mapping Matrix",
+    "text": "2.4 Mapping Matrix\nThe mapping matrix specifies the expected reward for each combination of context and arm feature values.\nIts rows correspond to the number of context-based feature values, and columns correspond to the number of arm-based feature values.\nThe value in each cell represents the expected reward for a specific context-arm feature pair.\nThe mapping matrix is determined by the mapping function and mapping dependency.\n\n2.4.1 Mapping Function\nConsidering one feature, the feature values can be mapped to expected rewards in the following ways:\n1. identical: All feature values share the same reward.\n2. independent: Rewards for feature values are independently different.\n3. associative(only for ordered feature): Rewards vary across feature values in a predictable way. # TODO: 统一形式 Gaussian process function learning\n\n\n\n\n\n\nImplementation Details\n\n\n\nMapping function describes how expected reward is assigned to different feature values:\n\nidentical: Sample reward once and assign it to all feature values.\nindependent: Independently sample reward for each feature value.\nassociative: Generate a reward sequence through a specific process (e.g., random walk), then assign the sequence to all feature values. The process can be one of the following:\n\nrandomwalk: A random walk process.\nlinear: Linearly monotonic change.\nexponential: Exponentially monotonic change.\n\n\n\n\n随机性 函数\n\n\n2.4.2 Mapping Dependency\nFeatures may contribute to the overall reward independently or jointly.\nSince we only consider the combination of one context-based feature and one arm-based feature, there are four possible mapping dependencies:\n\nIndependent mapping:\n\narm_only: Rewards only depend on arm feature values.\n\ncontext_only: Rewards only depend on context feature values.\n\n\nJoint mapping:\n\narm_on_context: Rewards depend on arm feature values, but the mapping varies across context feature values.\n\ncontext_on_arm: Rewards depend on context feature values, but the mapping varies across arm feature values.\n\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nThe mapping matrix has rows corresponding to context-based feature values, and columns corresponding to arm-based feature values.\nFor independent mapping, arm_only or context_only, a broadcasting mechanism is used:\nThe mapping function is applied to all values of the feature, and the resulting sequence is repeated along the default feature of the other dimension.\nFor joint mapping, arm_on_context or context_on_arm, a seeding mechanism is used:\nThe mapping function generates rewards for all values of the primary (conditioned) feature, while applying independent random seeds across different values of the secondary (conditioning) feature.\n\n\n\n\n\n\n\n\nExample\n\n\n\nConsider a task with 5 trials and 4 arms of 3 colors.\nIf we want rewards to be independent across colors, then feature color takes independent mapping function and arm_only mapping dependency.\nThe mapping matrix \\(M_{color}\\) might be: \\[\n\\begin{bmatrix}\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n\\end{bmatrix}\n\\] 5 rows for 5 trials, 3 columns for 3 colors.\nFor different colors, the rewards are independently different.\nAcross trials, the rewards of each color are consistent.\nLet’s say, we want rewards across trials to be associated, while different colors exhibit different associative patterns.\nIn that case, trial- color pair takes associative mapping function and context_on_arm mapping dependency.\nThen the mapping matrix might be: \\[\n\\begin{bmatrix}\n2 & 6 & 1 \\\\\n1 & 5 & 2 \\\\\n2 & 4 & 3 \\\\\n3 & 5 & 4 \\\\\n2 & 6 & 5 \\\\\n\\end{bmatrix}\n\\] 5 rows for 5 trials, 3 columns for 3 colors.\nFor each color, the rewards change across trials smoothly.\nFor different colors, the change pattern varies."
+  },
+  {
+    "objectID": "new.html#basic-config-overview",
+    "href": "new.html#basic-config-overview",
+    "title": "IntegrativeBandit",
+    "section": "1.1 Overview",
+    "text": "1.1 Overview\nIn this section, we will go through some basic attributes of bandit task."
+  },
+  {
+    "objectID": "new.html#basic-config-conceptual-intro",
+    "href": "new.html#basic-config-conceptual-intro",
+    "title": "IntegrativeBandit",
+    "section": "1.2 Conceptual Introduction",
+    "text": "1.2 Conceptual Introduction\n\nNumberTrial: Number of trials\nNumberArm: Number of arms\nRewardType: Type of reward\n\nnumerical: Reward is an integer between 0 and 100 (inclusive), drawn from a Gaussian distribution, whose mean is given by the reward matrix.\nbinary: Reward is either 0 or 1, following a Bernoulli distribution. Reward probability is given by the reward matrix.\n\nFeedback: How to provide feedback in a trial\n\ncontingent: Feedback is given only for the chosen arm\nfull: Feedback is given for every arm whether it is chosen or not\n\nCoverStory: Cover story of the task\n\nsocial: Trading with aliens\nnon-social: Mining at ores"
+  },
+  {
+    "objectID": "new.html#basic-config-setup-with-ui",
+    "href": "new.html#basic-config-setup-with-ui",
+    "title": "IntegrativeBandit",
+    "section": "1.3 Setup with UI",
+    "text": "1.3 Setup with UI\n\n\n\n\n\n\nNote\n\n\n\nSeed is also shown in UI, but it is only for illustration purpose (To ensure the reproducibility of the reward matrix). It does not affect the actual task in any way."
+  },
+  {
+    "objectID": "new.html#feature-config-overview",
+    "href": "new.html#feature-config-overview",
+    "title": "IntegrativeBandit",
+    "section": "2.1 Overview",
+    "text": "2.1 Overview\nIn this section, we will discuss the features in bandit tasks.\nFeatures help agents distinguish different contexts and arms, facilitating learning.\nThe setup determines how features are allocated across trials or arms, which is critical for stimuli presentation and reward generation."
+  },
+  {
+    "objectID": "new.html#feature-config-conceptual-intro",
+    "href": "new.html#feature-config-conceptual-intro",
+    "title": "IntegrativeBandit",
+    "section": "2.2 Conceptual Introduction",
+    "text": "2.2 Conceptual Introduction\n\n2.2.1 Feature Type\nFeatures can be either context-based or arm-based:\n\nContext-based feature: Features that vary across trials, distinguishing different contexts.\n\nArm-based feature: Features vary among arms, distinguishing different arms.\n\n\n\n2.2.2 Values of Feature\nEach feature can take multiple values. These values describe all possible instances of the feature that participants may encounter during the experiment.\nFor example, suppose the task includes arms of two colors: red and orange.\nIn this case, the feature color has 2 values: 1 represents red, and 2 represents orange.\n\n\n\n\n\n\nNote\n\n\n\nTrial is the default ContextFeature, with values corresponding to trial indices that increment as the experiment progresses.\nArm is the default ArmFeature, with values corresponding to arm indices that increase from left to right.\n\n\n\n\n\n\n\n\nExample\n\n\n\n In this example, color (2 values) and numberStripe (2 values) distinguish planets (arms), making them arm-based features along with arm index arm (4 values).\ngalaxy (4 values, totally 4 states, one in a specific trial) distinguishes contexts, making it a context-based feature along with trial index trial (5 values, totally 5 trials).\n\n\n\n\n2.2.3 Feature Allocation\nThe values of a feature are allocated across trials or arms following two possible patterns:\n\nshuffled: Values are randomly assigned with even proportion, e.g., 1 3 2 2 1 3.\n\nascending: Values are assigned in ascending order (repeat if the total length exceeds the number of values), e.g., 1 2 3 1 2 3.\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nTo facilitate reward matrix generation, the allocation of a feature is represented as an one-hot encoding matrix.\nThis matrix describes how the feature values are distributed along the corresponding dimension (trials or arms).\nThe rows of the matrix correspond to the number of trials or arms, and the columns correspond to the number of feature values.\nFor each cell, 1 indicates that the specific trial/arm is assigned the corresponding feature value.\nFor example, let’s say there are 5 trials. A context-based feature galaxy takes three values: vertical ellipse, circle, horizontal ellipse, with shuffled allocation. Then the corresponding allocation matrix could be: \\[\n\\begin{bmatrix}\n1 & 0 & 0 \\\\\n0 & 1 & 0 \\\\\n0 & 0 & 1 \\\\\n0 & 0 & 1 \\\\\n1 & 0 & 0 \\\\\n\\end{bmatrix}\n\\] The shape of this allocation matrix is 5 (number of trials) x 3 (number of galaxy values).\nAccording to the matrix, in the 1st and 5th trial, the galaxy is vertical ellipse; in the 2nd trial, the galaxy is circle; in the 3rd and 4th trial, the galaxy is horizontal ellipse."
+  },
+  {
+    "objectID": "new.html#setup-with-ui",
+    "href": "new.html#setup-with-ui",
+    "title": "IntegrativeBandit",
+    "section": "2.3 Setup with UI",
+    "text": "2.3 Setup with UI\n ### 2.3.1 Add a Feature 1. Navigate to the panel of the feature type: - Context Feature if the feature varies across trials.\n- Arm Feature if the feature varies across arms.\n2. Specify the feature details:\n- Name: Select the feature name in the Name field.\n- Levels: Enter the number of possible values for the feature in the NumberValue field.\n- Allocation: Choose the allocation pattern in the Allocation field, which determines how the feature’s values are distributed across its dimension (trials or arms).\n3. Click Update button to add the feature to the table. ### 2.3.2 Delete a Feature Click the Delete button next to the feature in the table. ### 2.3.3 Edit a Feature To edit a feature, update its details as described in the [[#2.3.1 Add a Feature]]. The new settings will automatically overwrite the existing record.\n[!NOTE] 1. Default features (trial, arm) can’t be delete or directly edit. If you change the number of trials or arms in [[#1 Basic configuration]], the corresponding values will be automatically updated."
+  },
+  {
+    "objectID": "new.html#reward-config-overview",
+    "href": "new.html#reward-config-overview",
+    "title": "IntegrativeBandit",
+    "section": "3.1 Overview",
+    "text": "3.1 Overview\nIn this section, we will discuss the reward structure in bandit tasks.\nThe setup generate a reward matrix based on context and arm features."
+  },
+  {
+    "objectID": "new.html#reward-config-conceptual-intro",
+    "href": "new.html#reward-config-conceptual-intro",
+    "title": "IntegrativeBandit",
+    "section": "3.2 Conceptual Introduction",
+    "text": "3.2 Conceptual Introduction\n\n3.2.1 Reward Matrix\nThe reward structure is described by the reward matrix.\nThe rows of the matrix correspond to the number of trials, and the columns correspond to the number of arms.\nThe value in each cell represents the expected reward for selecting the corresponding arm in the corresponding trial.\n\nfor numeric reward, the reward follows a \\(Gaussian\\) distribution. The value represents the mean reward.\n\nfor binary reward, the reward follows a \\(Bernoulli\\) distribution. The value represents the reward probability.\n\nFor instance, a reward matrix may look like this:\n\\[\n\\begin{bmatrix}\n1 & 2 & 3 \\\\\n4 & 5 & 6 \\\\\n7 & 8 & 9 \\\\\n10 & 11 & 12 \\\\\n13 & 14 & 15 \\\\\n\\end{bmatrix}\n\\] It has the shape of 5 (number of trials) ×3 (number of arms).\nEach cell indicates the expected reward of drawing a specific arm in a specific trial.\nFor example, in the second trial, the third arm has the expected reward of 6: \\(E[R|T=2, A=3] = 6\\).\n\n\n\n\n\n\nImplementation Details\n\n\n\nAll calculations of the reward matrix in the following sections are based on the scale of 0~100. When reward type is binary, the calculated matrix will be scaled to 0~1.\n\n\n\n\n3.2.2 Decompose Reward Matrix\nThe overall reward matrix determines the expected reward for each trial and arm combination.\nAs described previously, there are context-based features across trials and arm-based features among arms.\nThose features independently or jointly contribute to the expected reward.\nThe overall reward matrix can be decomposed into component matrices based on individual features or their combinations.\n\n\n\n\n\n\nNote\n\n\n\nTo avoid complexity, when it comes to the feature combination, we only consider the combination of one context-based feature and one arm-based feature.\n\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nSuppose there are two arm-based features: color and numberStripe.\nEach feature independently contributes to the reward (e.g., red planets yields higher rewards than orange planets, and planets with more stripes yield higher rewards). Then the reward matrix is:\n\\[\nR = R_{\\text{color}} + R_{\\text{numberStripe}}\n\\]\nHere, \\(R_{\\text{color}}\\) and \\(R_{\\text{numberStripe}}\\) are two independent component matrices describing the contribution of color and numberStripe to the expected reward.\n\n\n\n\n3.2.3 Component Matrix\nA component matrix describes the unique contribution of a specific feature or a combination of features to the expected reward.\nIt has the same shape as the overall reward matrix, with rows corresponding to the number of trials and columns corresponding to the number of arms.\nThe value in each cell represents the expected reward for drawing a specific arm in a specific trial, when only considering the certain feature or combination.\nHow a feature or combination contributes to the overall reward matrix can be understood as a process of two steps:\n\nFeature allocation: How the feature values are distributed across trials and arms, see allocation matrix.\nFeature-to-reward mapping: How much reward each feature value provides, see mapping matrix.\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nThe component matrix for a feature (or combination) is generated through matrix multiplication.\nFor feature combination: \\[\nR_{contextFeature, armFeature} = A_{\\text{contextFeature}} \\cdot M_{\\text{contextFeature,armFeature}} \\cdot A_{\\text{armFeature}}^T\n\\]\nwhere:\n\n\\(R_{contextFeature, armFeature}\\): Component matrix of the feature combination, describing its unique contribution to the overall expected reward matrix.\n\n\\(A_{\\text{contextFeature}}\\): Allocation matrix of the context-based feature across trials.\n\n\\(M_{\\text{contextFeature,armFeature}}\\): Mapping matrix, describing the expected reward for each value pair of context-based feature and arm-based feature.\n\n\\(A_{\\text{armFeature}}^T\\): Transposed allocation matrix of the arm-based feature.\n\nFor single feature, the component matrix is constructed by using the default feature of the missing dimension:\n\nWhen considering the independent contribution of an arm-based feature, the context dimension will take the default feature trial. \\[\nR_{armFeature} = A_{\\text{trial}} \\cdot M_{\\text{trial,armFeature}} \\cdot A_{\\text{armtFeature}}^T\n\\]\n\nSimilarly, for a context-based feature, the arm dimension will take the default feature arm. \\[\nR_{contextFeature} = A_{\\text{contextFeature}} \\cdot M_{\\text{contextFeature,arm}} \\cdot A_{\\text{arm}}^T\n\\]\n\n\n\n\n\n\n\n\n\n\nExample\n\n\n\nFor instance, let’s say there are 5 trials and 4 arms.\nContext feature galaxy takes three values, vertical ellipse, circle, horizontal ellipse, with ascending allocation.\nArm feature color takes two values, red, orange, with shuffled allocation.  Then the allocation matrix of galaxy \\(A_{galaxy}\\) is: \\[\n\\begin{bmatrix}\n1 & 0 & 0 \\\\\n0 & 1 & 0 \\\\\n0 & 0 & 1 \\\\\n1 & 0 & 0 \\\\\n0 & 1 & 0 \\\\\n\\end{bmatrix}\n\\] The allocation matrix of color \\(A_{color}\\) is: \\[\n\\begin{bmatrix}\n0 & 1 \\\\\n1 & 0 \\\\\n1 & 0 \\\\\n0 & 1 \\\\\n\\end{bmatrix}\n\\] Assume the mapping matrix for galaxy-color pair \\(M_{galaxy, color}\\) is: \\[\n\\begin{bmatrix}\n3 & 2 \\\\\n1 & 2 \\\\\n2 & 2 \\\\\n\\end{bmatrix}\n\\] The mapping matrix specifies the expected rewards for traveling to planets with specific colors given specific galaxy states.\nFor example, \\(M_{2,1}=1\\), means that when observing the circle galaxy, the expected reward of traveling to a red planet is 1.\nThe component matrix for the combination of galaxy and color \\(R_{galaxy, color}\\) can be then calculated as: \\[\nR_{galaxy, color} = A_{galaxy} \\cdot M_{galaxy, color} \\cdot A_{color}^T\n\\]\n\\[\n\\begin{bmatrix}\n2 & 3 & 3 & 2\\\\\n2 & 1 & 1 & 2\\\\\n2 & 2 & 2 & 2\\\\\n2 & 3 & 3 & 2\\\\\n2 & 1 & 1 & 2\\\\\n\\end{bmatrix}\n=\n\\begin{bmatrix}\n1 & 0 & 0 \\\\\n0 & 1 & 0 \\\\\n0 & 0 & 1 \\\\\n1 & 0 & 0 \\\\\n0 & 1 & 0\n\\end{bmatrix}\n\\cdot\n\\begin{bmatrix}\n3 & 2 \\\\\n1 & 2 \\\\\n2 & 2 \\\\\n\\end{bmatrix}\n\\cdot\n\\begin{bmatrix}\n0 & 1 \\\\\n1 & 0 \\\\\n1 & 0 \\\\\n0 & 1\n\\end{bmatrix}^T\n\\]\nThe resulting matrix \\(R_{galaxy, color}\\) describes the expected reward for selecting a specific arm in a specific trial, when only considering the galaxy-color feature pair.\nFor example, \\(R_{4,3}=3\\), means that when choosing the third arm in the fourth trial, the galaxy-color feature pair contributes 3 to the overall expected reward.\n\n\n\n\n3.2.4 Mapping Matrix\nThe mapping matrix specifies the expected reward for each combination of context and arm feature values.\nIts rows correspond to the number of context-based feature values, and columns correspond to the number of arm-based feature values.\nThe value in each cell represents the expected reward for a specific context-arm feature pair.\nThe mapping matrix is determined by the mapping function and mapping dependency.\n\n3.2.4.1 Mapping Function\nConsidering one feature, the feature values can be mapped to expected rewards in the following ways:\n1. identical: All feature values share the same reward.\n2. independent: Rewards for feature values are independently different.\n3. associative(only for ordered feature): Rewards vary across feature values in a predictable way. # TODO: 统一形式 Gaussian process function learning\n\n\n\n\n\n\nImplementation Details\n\n\n\nMapping function describes how expected reward is assigned to different feature values:\n\nidentical: Sample reward once and assign it to all feature values.\nindependent: Independently sample reward for each feature value.\nassociative: Generate a reward sequence through a specific process (e.g., random walk), then assign the sequence to all feature values. The process can be one of the following:\n\nrandomwalk: A random walk process.\nlinear: Linearly monotonic change.\nexponential: Exponentially monotonic change.\n\n\n\n\n随机性 函数\n\n\n3.2.4.2 Mapping Dependency\nFeatures may contribute to the overall reward independently or jointly.\nSince we only consider the combination of one context-based feature and one arm-based feature, there are four possible mapping dependencies:\n\nIndependent mapping:\n\narm_only: Rewards only depend on arm feature values.\n\ncontext_only: Rewards only depend on context feature values.\n\n\nJoint mapping:\n\narm_on_context: Rewards depend on arm feature values, but the mapping varies across context feature values.\n\ncontext_on_arm: Rewards depend on context feature values, but the mapping varies across arm feature values.\n\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nThe mapping matrix has rows corresponding to context-based feature values, and columns corresponding to arm-based feature values.\nFor independent mapping, arm_only or context_only, a broadcasting mechanism is used:\nThe mapping function is applied to all values of the feature, and the resulting sequence is repeated along the default feature of the other dimension.\nFor joint mapping, arm_on_context or context_on_arm, a seeding mechanism is used:\nThe mapping function generates rewards for all values of the primary (conditioned) feature, while applying independent random seeds across different values of the secondary (conditioning) feature.\n\n\n\n\n\n\n\n\nExample\n\n\n\nConsider a task with 5 trials and 4 arms of 3 colors.\nIf we want rewards to be independent across colors, then feature color takes independent mapping function and arm_only mapping dependency.\nThe mapping matrix \\(M_{color}\\) might be: \\[\n\\begin{bmatrix}\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n1 & 5 & 2 \\\\\n\\end{bmatrix}\n\\] 5 rows for 5 trials, 3 columns for 3 colors.\nFor different colors, the rewards are independently different.\nAcross trials, the rewards of each color are consistent.\nLet’s say, we want rewards across trials to be associated, while different colors exhibit different associative patterns.\nIn that case, trial- color pair takes associative mapping function and context_on_arm mapping dependency.\nThen the mapping matrix might be: \\[\n\\begin{bmatrix}\n2 & 6 & 1 \\\\\n1 & 5 & 2 \\\\\n2 & 4 & 3 \\\\\n3 & 5 & 4 \\\\\n2 & 6 & 5 \\\\\n\\end{bmatrix}\n\\] 5 rows for 5 trials, 3 columns for 3 colors.\nFor each color, the rewards change across trials smoothly.\nFor different colors, the change pattern varies."
+  },
+  {
+    "objectID": "new.html#setup-with-ui-1",
+    "href": "new.html#setup-with-ui-1",
+    "title": "IntegrativeBandit",
+    "section": "3.3 Setup with UI",
+    "text": "3.3 Setup with UI\n[[Pasted image 20241209085138.png]] Configure the mapping just like how we write regression formula: \\(f_1(Feature1|Feature2) + f_2(Feature1) + f_3(Feature3|Feature4)...\\)"
+  },
+  {
+    "objectID": "new.html#overview",
+    "href": "new.html#overview",
+    "title": "IntegrativeBandit",
+    "section": "4.1 Overview",
+    "text": "4.1 Overview\nIn this section, we will go through setup of three manipulations that will influence the bandit task performance, but not directly through the reward matrix."
+  },
+  {
+    "objectID": "new.html#conceptual-introduction",
+    "href": "new.html#conceptual-introduction",
+    "title": "IntegrativeBandit",
+    "section": "4.2 Conceptual Introduction",
+    "text": "4.2 Conceptual Introduction\n\n4.2.1 Manipulation Aspects\n\nInformation: (Horizontal task, Wilson et al., 2014) Information is manipulated through chosen count in the forced choice phase. Being chosen more brings more information.\nNoise: (Two-armed bandit task, Gershman, 2018) Noise is manipulated through the variance level of the reward generation process. Larger variance means more noise.\nCost: (Search task, Bhatia et al., 2021) The cost is manipulated through the price of sampling an arm (can be regarded as a discount of reward mean). Higher price means higher cost.\n\n[!NOTE] Noise and cost manipulation are only available for numerical reward type. ### 4.2.2 Manipulation Levels There are four possible levels of each manipulation. - “None”: N = 0 - “Low”: N = 1 - “Medium”: N = 5 - “High”: N = 10 For Information, N is the number of forced choices; for Noise and Cost, N is the variance and price of the reward generation process. ### 4.2.3 Within-session vs. Between-session Asymmetry Those manipulations can be asymmetric between sessions, being identical among arms but different across sessions (e.g. Session1 has high noise than Session2). In this case, Level field needs to be specified. The manipulation for each arm will be set to the Level value. Or they can be asymmetric within session, being different among arms (e.g. Arm1 has high information than Arm2). In this case, Level field is not needed. The manipulation for each arm is sampled from the manipulation level list. [!NOTE] The manipulations are always consistent within a session, across different trials.\n\n\n4.2.4 Availability to Participants\nAll of those manipulations can be explicitly informed to participants. For example, by showing participants the variance of each arm, they will know the noise levels. Or manipulations can be hidden from participants, in which case participants can only infer the levels based on their own experience. [!NOTE] Information manipulation (forced choice) can only be explicit. Noise is usually hidden; while cost is usually explicit."
+  },
+  {
+    "objectID": "new.html#setup-with-ui-2",
+    "href": "new.html#setup-with-ui-2",
+    "title": "IntegrativeBandit",
+    "section": "4.3 Setup with UI",
+    "text": "4.3 Setup with UI\n[[Pasted image 20241209085126.png]] - Pattern specifies whether the manipulation is the same or different among arms. - “Equal”: Identical among arms, equal to Level. - “Unequal”: Different among arms, sampled from the manipulation level list (0, 1, 5, 10) - Level field is only available when Pattern = “Equal”. It determines the level of the manipulation. - Explicitly Provided: Only for noise and cost manipulation. Whether the manipulation is explicitly informed to participants. - # Forced Choice: Only for information manipulation with Pattern = “Unequal”. It determines the total number of forced choices in the forced choice phase. The samples will be scaled to avoid undesired excessive forced choices. For example, if there are only 10 trials, it’s easy for the sum of unequal samples to exceed the total trial number."
+  },
+  {
+    "objectID": "index.html#manipulation-config-overview",
+    "href": "index.html#manipulation-config-overview",
+    "title": "Integrative Bandit",
+    "section": "4.1 Overview",
+    "text": "4.1 Overview\nIn this section, we will go through two non-reward decision factors.\nThose factors will influence decision-making in bandit task, but not directly through the reward matrix."
+  },
+  {
+    "objectID": "index.html#manipulation-config-conceptual-intro",
+    "href": "index.html#manipulation-config-conceptual-intro",
+    "title": "Integrative Bandit",
+    "section": "4.2 Conceptual Introduction",
+    "text": "4.2 Conceptual Introduction\n\n4.2.1 Noise\nNoise: (Gershman, 2018, only available for numeric reward type) is manipulated through the variance level of the reward generation process. Larger variance means more noise.\nThere are four possible modes.\n\nnone: \\(\\sigma = 0\\) for each arm\nlow: \\(\\sigma = 10\\) for each arm\nhigh: \\(\\sigma = 20\\) for each arm\ndifferent: \\(\\sigma\\) is different for each arm.\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nWhen the mode is different:\n\nGroup the arms based on the average reward value.\nRandomly assign different levels (0,10,20) to arms with similar reward levels.\n\nThis grouping and allocation method ensures that each reward level has approximately equal quantities of each noise level.\n\n\n\n\n4.2.2 Information\nInformation: (Wilson et al., 2014) is manipulated through the number of forced choices. Being chosen more brings more information.\nThere are four possible modes:\n\nnone: No forced choice for each arm.\nlow: 1 forced choice for each arm.\nhigh: 3 forced choices for each arm.\ndifferent: Different forced choices for each arm.\n\n\n\n\n\n\n\nImplementation Details\n\n\n\nWhen the mode is different, the implementation is similar to the noise manipulation.\nAdditionally, for forced choice, the program will sample multiple times to ensure the total number of forced choice is less than the total trial number NUM_TRIALS.\n\n\n\n\n\n\n\n\nExample\n\n\n\nIn social/nonsocial games:\n\nNoise is depicted as the dizziness of aliens/lightning on a planet. More symbols means higher noise level.\nInformation is achieved through forced choices, where players press the spacebar for system-determined selection. The cover story is described as radar overload/the spaceship experiencing a magnetic field.\n\n\n\n\nAdditional Manipulation in Social Game\n\n\n\n\n\nAdditional Manipulation in Nonsocial Game"
+  },
+  {
+    "objectID": "index.html#manipulation-config-setup-with-ui",
+    "href": "index.html#manipulation-config-setup-with-ui",
+    "title": "Integrative Bandit",
+    "section": "4.3 Setup with UI",
+    "text": "4.3 Setup with UI\n{\n  \"forcedChoiceMode\": \"different\",\n  \"noiseMode\": \"low\",\n}\nHere, we set the forced choice count for different arms to be different, and the noise level to be low for all arms (\\(\\sigma = 10\\))."
+  },
+  {
+    "objectID": "index.html#here-we-set-a-multi-arm-bandit-task-with-40-trials-and-4-arms.-the-cover-story-is-nonsocial-collecting-water-from-planets.-the-reward-type-is-binary.",
+    "href": "index.html#here-we-set-a-multi-arm-bandit-task-with-40-trials-and-4-arms.-the-cover-story-is-nonsocial-collecting-water-from-planets.-the-reward-type-is-binary.",
+    "title": "IntegrativeBandit",
+    "section": "Here, we set a multi-arm bandit task with 40 trials and 4 arms. The cover story is nonsocial, collecting water from planets. The reward type is binary.",
+    "text": "Here, we set a multi-arm bandit task with 40 trials and 4 arms. The cover story is nonsocial, collecting water from planets. The reward type is binary."
+  },
+  {
+    "objectID": "Demo.html",
+    "href": "Demo.html",
+    "title": "Demos",
+    "section": "",
+    "text": "Here are several demos of the bandit task:"
+  },
+  {
+    "objectID": "Demo.html#available-demos",
+    "href": "Demo.html#available-demos",
+    "title": "Demos",
+    "section": "",
+    "text": "Here are the different versions of the Integrative Bandit task:\n\n\n\nSocial Binary Task\n\nBinary choice version with social information\n\nSocial Numeric Task\n\nNumeric input version with social information\n\n\n\n\n\n\nNon-social Binary Task\n\nBinary choice version without social information\n\nNon-social Numeric Task\n\nNumeric input version without social information"
+  },
+  {
+    "objectID": "Demo.html#by-condition",
+    "href": "Demo.html#by-condition",
+    "title": "Demos",
+    "section": "By Condition",
+    "text": "By Condition\n\nSocial Tasks\nSocial cover story: Alien communication\n\nSocial Binary Task. Binary reward\nSocial Numeric Task. Numeric reward\n\n\n\nNon-social Tasks\nNon-social cover story: planet travel\n\nNon-social Binary Task. Binary reward\nNon-social Numeric Task. Numeric reward"
+  },
+  {
+    "objectID": "Demo.html#by-task",
+    "href": "Demo.html#by-task",
+    "title": "Demos",
+    "section": "By Task",
+    "text": "By Task\nThose examples use social cover story and numeric reward:\n\nHorizon Task\nStructural Bandit\nContextual Bandit\nRestless Bandit\nMulti-Armed Bandit\nAsymmetric Noise (Gershman, 2018)\nLearning Trap"
+  }
+]
