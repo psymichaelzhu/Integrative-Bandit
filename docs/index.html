@@ -243,9 +243,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NUM_TRIALS"</span>: <span class="dv">40</span>,</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NUM_ARMS"</span>: <span class="dv">4</span>,</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"COVER_STORY"</span>: <span class="st">"nonsocial"</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"REWARD_TYPE"</span>: <span class="st">"binary"</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Here, we set a multi-arm bandit task with 40 trials and 4 arms. The cover story is nonsocial, collecting water from planets. The reward type is binary.</p>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"REWARD_TYPE"</span>: <span class="st">"binary"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"blockMessage"</span>: [<span class="st">"In this session, Some options yield more rewards than others."</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Here, we set a multi-arm bandit task with 40 trials and 4 arms. The cover story is nonsocial, collecting water from planets. The reward type is binary.<br>
+The block message is displayed at the beginning of block.</p>
 <hr>
 </section>
 </section>
@@ -622,7 +624,7 @@ The value in each cell represents the expected reward for a specific trial-arm f
 <p>Considering one feature, different feature values can be mapped to expected rewards in the following ways:<br>
 1. <code>identical</code>: All feature values share the same reward.<br>
 2. <code>independent</code>: Rewards for feature values are independently different.<br>
-3. <code>smooth</code>(only for ordered feature): Rewards vary across feature values in a predictable (e.g.&nbsp;linear) way.</p>
+3. <code>smooth</code>(only for ordered feature): Rewards vary across feature values in a predictable way (Closer feature values have similar rewards).</p>
 <div class="callout callout-style-default callout-caution callout-titled" title="Implementation Details" style="background-color: #EEF7EA;">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -713,11 +715,11 @@ Across trials, the rewards of each color are consistent.</p>
 In that case, <code>trial</code>- <code>color</code> pair takes <code>smooth</code> mapping function and <code>context_on_arm</code> mapping structure.<br>
 Then the mapping matrix might be: <span class="math display">\[
 \begin{bmatrix}
-59 &amp; 42 &amp; 84 \\
-48 &amp; 43 &amp; 72 \\
-37 &amp; 44 &amp; 60 \\
-26 &amp; 45 &amp; 48 \\
-15 &amp; 46 &amp; 36 \\
+59 &amp; 42 &amp; 33 \\
+48 &amp; 43 &amp; 44 \\
+37 &amp; 44 &amp; 55 \\
+26 &amp; 45 &amp; 34 \\
+15 &amp; 46 &amp; 23 \\
 \end{bmatrix}
 \]</span> 5 rows for 5 trials, 3 columns for 3 colors.<br>
 For each color, the rewards change across trials smoothly.<br>
@@ -770,7 +772,7 @@ For example, red arm yields 81, and orange arm yields 35, no matter what galaxy 
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  ],</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>For each <code>armCategorical</code> (color), the reward change smoothly across <code>trial</code> values; while different <code>armCategorical</code> (color) values have independent mappings across <code>trial</code> values.<br>
-For example, for the red planet, its reward decreases from 59 to 15 across trials; for the orange planet, its reward increases from 42 to 46 across trials.</p>
+For example, for the red planet, its reward smoothly decreases from 59 to 15 across trials; for the orange planet, its reward smoothly increases from 42 to 46 across trials.</p>
 </section>
 <section id="example-3-complex-reward-matrix" class="level3">
 <h3 class="anchored" data-anchor-id="example-3-complex-reward-matrix">Example 3: Complex Reward Matrix</h3>
