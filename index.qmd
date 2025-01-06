@@ -30,11 +30,13 @@ In this section, we will go through some basic attributes of bandit task.
     "NUM_TRIALS": 40,
     "NUM_ARMS": 4,
     "COVER_STORY": "nonsocial",
-    "REWARD_TYPE": "binary"
+    "REWARD_TYPE": "binary",
+    "blockMessage": ["In this session, Some options yield more rewards than others."]
 }
 ```
 
-Here, we set a multi-arm bandit task with 40 trials and 4 arms. The cover story is nonsocial, collecting water from planets. The reward type is binary.
+Here, we set a multi-arm bandit task with 40 trials and 4 arms. The cover story is nonsocial, collecting water from planets. The reward type is binary.  
+The block message is displayed at the beginning of block.
 
 ------------------------------------------------------------------------
 
@@ -307,7 +309,7 @@ The mapping matrix is determined by the **mapping function** and **mapping struc
 Considering one feature, different feature values can be mapped to expected rewards in the following ways:\
 1. `identical`: All feature values share the same reward.\
 2. `independent`: Rewards for feature values are independently different.\
-3. `smooth`(only for ordered feature): Rewards vary across feature values in a predictable (e.g. linear) way.
+3. `smooth`(only for ordered feature): Rewards vary across feature values in a predictable way (Closer feature values have similar rewards).
 
 ::: {.callout-caution title="Implementation Details" style="background-color: #EEF7EA;"}
 Mathematically, three types of mapping modes can be described by the unified format of Gaussian process. The key parameter is the generalization parameter $\lambda$. $$k(x_i, x_j) = \exp(-\frac{(x_i - x_j)^2}{\lambda})$$ where $k(x_i, x_j)$ is the correlation between rewards at feature values $x_i$ and $x_j$.
@@ -364,11 +366,11 @@ Let's say, we want rewards across trials to be associated, while different color
 In that case, `trial`- `color` pair takes `smooth` mapping function and `context_on_arm` mapping structure.\
 Then the mapping matrix might be: $$
 \begin{bmatrix}
-59 & 42 & 84 \\
-48 & 43 & 72 \\
-37 & 44 & 60 \\
-26 & 45 & 48 \\
-15 & 46 & 36 \\
+59 & 42 & 33 \\
+48 & 43 & 44 \\
+37 & 44 & 55 \\
+26 & 45 & 34 \\
+15 & 46 & 23 \\
 \end{bmatrix}
 $$ 5 rows for 5 trials, 3 columns for 3 colors.\
 For each color, the rewards change across trials smoothly.\
@@ -422,7 +424,7 @@ For example, red arm yields 81, and orange arm yields 35, no matter what galaxy 
 ```
 
 For each `armCategorical` (color), the reward change smoothly across `trial` values; while different `armCategorical` (color) values have independent mappings across `trial` values.\
-For example, for the red planet, its reward decreases from 59 to 15 across trials; for the orange planet, its reward increases from 42 to 46 across trials.
+For example, for the red planet, its reward smoothly decreases from 59 to 15 across trials; for the orange planet, its reward smoothly increases from 42 to 46 across trials.
 
 ### Example 3: Complex Reward Matrix
 We can also set up a complex reward matrix with multiple mapping information:

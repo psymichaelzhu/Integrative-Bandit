@@ -4,37 +4,474 @@ title: "Demos"
 
 Here are several demos of the bandit task:
 
-
 ## By Condition
 
 ### Social Tasks
+
 Social cover story: Alien communication
 
-1. [Social Binary Task](http://137.184.115.81/publix/fyW5v1DP847). Binary reward
+1.  [Social Binary Task](http://137.184.115.81/publix/fyW5v1DP847). Binary reward
 
-2. [Social Numeric Task](http://137.184.115.81/publix/KdaZiyI3T85). Numeric reward
+2.  [Social Numeric Task](http://137.184.115.81/publix/KdaZiyI3T85). Numeric reward
 
 ### Non-social Tasks
+
 Non-social cover story: planet travel
 
-1. [Non-social Binary Task](http://137.184.115.81/publix/Y6mYGqX0TqR). Binary reward
+1.  [Non-social Binary Task](http://137.184.115.81/publix/Y6mYGqX0TqR). Binary reward
 
-2. [Non-social Numeric Task](http://137.184.115.81/publix/DpJTSqPzijA). Numeric reward
-
+2.  [Non-social Numeric Task](http://137.184.115.81/publix/DpJTSqPzijA). Numeric reward
 
 ## By Task
+
 Those examples use social cover story and numeric reward:
 
-1. [Horizon Task](http://137.184.115.81/publix/WHaNLnRDR95)
+1.  [Horizon Task](http://137.184.115.81/publix/WHaNLnRDR95) [(Wilson et al., 2014)](https://drive.google.com/open?id=1PrjsPjQELC6K5Z286VlVrhSuzj9scTrz)
 
-2. [Structural Bandit](http://137.184.115.81/publix/KxZYij6oMRD)
+::: {.callout-caution title="Implementation Details" style="background-color: #EEF7EA;" collapse="true"}
+``` json
+{
+  "TASK": "horizon task",
+  "COVER_STORY": "social",
+  "REWARD_TYPE": "numeric",
+  "NUM_TRIALS": 6,
+  "NUM_ARMS": 2,
+  "allVarInfo": {
+    "context": {
+      "name": "context",
+      "type": "trial",
+      "numberLevels": 1
+    },
+    "armCategorical": {
+      "name": "armCategorical",
+      "type": "arm",
+      "numberLevels": 2
+    },
+    "armOrdered": {
+      "name": "armOrdered",
+      "type": "arm",
+      "numberLevels": 1
+    }
+  },
+  "allRewardInfo": [
+    {
+      "mappingStructure": [
+        "arm"
+      ],
+      "mappingFunction": {
+        "generalization": "independent",
+        "level": "medium"
+      },
+      "primaryFeature": "arm",
+      "secondaryFeature": ""
+    }
+  ],
+  "forcedChoiceMode": "different",
+  "noiseMode": "low",
+  "blockMessage": [
+    "In this session, you will experience some forced choices at the beginning.",
+    "Press the Space key to get rid of them."
+  ]
+}
+```
 
-3. [Contextual Bandit](http://137.184.115.81/publix/GNtr0GraSdw)
+Social cover story, numeric reward, 6 trials, 2 arms.\
+1 context (spaceship state), 2 values of armCategorical (shape), 1 value of armOrdered (number of eyes).\
+Different arms have independent rewards.\
+Rewards are sampled around the medium level (50), meaning all rewards will not be too high or too low.\
+**Different arms have different number of forced choices (sampled from0, 1, 3), causing asymmetric information among them.**\
+Low noise ($\sigma = 10$) is applied to all arms.
+:::
 
-4. [Restless Bandit](http://137.184.115.81/publix/7LtVJgCbbxL)
+2.  [Structural Bandit](http://137.184.115.81/publix/KxZYij6oMRD) [(Schulz et al., 2019)](https://drive.google.com/open?id=1An-S6YUbVFz0JeNdqoepIHXT-gE0A4Mc)
 
-5. [Multi-Armed Bandit](http://137.184.115.81/publix/YfagcYg6GMz)
+::: {.callout-caution title="Implementation Details" style="background-color: #EEF7EA;" collapse="true"}
+``` json
+{
+  "TASK": "structural bandit",
+  "COVER_STORY": "social",
+  "REWARD_TYPE": "numeric",
+  "NUM_TRIALS": 15,
+  "NUM_ARMS": 8,
+  "allVarInfo": {
+    "context": {
+      "name": "context",
+      "type": "trial",
+      "numberLevels": 1
+    },
+    "armCategorical": {
+      "name": "armCategorical",
+      "type": "arm",
+      "numberLevels": 1
+    },
+    "armOrdered": {
+      "name": "armOrdered",
+      "type": "arm",
+      "numberLevels": 1
+    }
+  },
+  "allRewardInfo": [
+    {
+      "mappingStructure": [
+        "arm"
+      ],
+      "mappingFunction": {
+        "generalization": "smooth",
+        "level": "medium"
+      },
+      "primaryFeature": "arm",
+      "secondaryFeature": ""
+    }
+  ],
+  "forcedChoiceMode": "none",
+  "noiseMode": "low",
+  "blockMessage": [
+    "In this session, there are some connections between the features of the options and the reward they yield."
+  ]
+}
+```
 
-6. [Asymmetric Noise (Gershman, 2018)](http://137.184.115.81/publix/xRX7IkhJMMF)
+Social cover story, numeric reward, 15 trials, 8 arms.\
+1 context (spaceship state), 1 value of armCategorical (shape), 1 value of armOrdered (number of eyes).\
+**The reward changes smoothly with the increase of arm index (from left to right).**\
+Rewards are sampled around the medium level (50), meaning all rewards will not be too high or too low.\
+There is no forced choice.\
+Low noise ($\sigma = 10$) is applied to all arms.
+:::
 
-6. [Learning Trap](http://137.184.115.81/publix/Cw88G5rVELR)
+3.  [Contextual Bandit](http://137.184.115.81/publix/GNtr0GraSdw) [(Schulz et al., 2018)](https://drive.google.com/open?id=1UZiein8ISlSkyej8j6HQU0YurOTmhY_1)
+
+::: {.callout-caution title="Implementation Details" style="background-color: #EEF7EA;" collapse="true"}
+``` json
+{
+  "TASK": "contextual bandit",
+  "COVER_STORY": "social",
+  "REWARD_TYPE": "numeric",
+  "NUM_TRIALS": 25,
+  "NUM_ARMS": 4,
+  "allVarInfo": {
+    "context": {
+      "name": "context",
+      "type": "trial",
+      "numberLevels": 3
+    },
+    "armCategorical": {
+      "name": "armCategorical",
+      "type": "arm",
+      "numberLevels": 4
+    },
+    "armOrdered": {
+      "name": "armOrdered",
+      "type": "arm",
+      "numberLevels": 1
+    }
+  },
+  "allRewardInfo": [
+    {
+      "mappingStructure": [
+        "trial",
+        "arm"
+      ],
+      "mappingFunction": {
+        "generalization": "independent",
+        "level": "medium"
+      },
+      "primaryFeature": "context",
+      "secondaryFeature": "arm"
+    }
+  ],
+  "forcedChoiceMode": "none",
+  "noiseMode": "low",
+  "blockMessage": [
+    "In this session, context changes across time.",
+    "When the context changes, the reward the options yield might vary."
+  ]
+}
+```
+
+Social cover story, numeric reward, 25 trials, 4 arms.\
+3 contexts (spaceship state), 4 values of armCategorical (shape), 1 value of armOrdered (number of eyes).\
+**For each arm, the reward changes independently across contexts, while different arms have different mapping patterns (using different sampling seeds).**\
+Rewards are sampled around the medium level (50), meaning all rewards will not be too high or too low.\
+There is no forced choice.\
+Low noise ($\sigma = 10$) is applied to all arms.
+:::
+
+4.  [Restless Bandit](http://137.184.115.81/publix/7LtVJgCbbxL) [(Daw et al., 2006)](https://drive.google.com/open?id=11hUoEiDnSMfR8Tw2ijZU-rCuFNQ-GgHa)
+
+::: {.callout-caution title="Implementation Details" style="background-color: #EEF7EA;" collapse="true"}
+``` json
+{
+  "TASK": "restless bandit",
+  "COVER_STORY": "social",
+  "REWARD_TYPE": "numeric",
+  "NUM_TRIALS": 25,
+  "NUM_ARMS": 4,
+  "allVarInfo": {
+    "context": {
+      "name": "context",
+      "type": "trial",
+      "numberLevels": 1
+    },
+    "armCategorical": {
+      "name": "armCategorical",
+      "type": "arm",
+      "numberLevels": 4
+    },
+    "armOrdered": {
+      "name": "armOrdered",
+      "type": "arm",
+      "numberLevels": 1
+    }
+  },
+  "allRewardInfo": [
+    {
+      "mappingStructure": [
+        "trial",
+        "arm"
+      ],
+      "mappingFunction": {
+        "generalization": "smooth",
+        "level": "medium"
+      },
+      "primaryFeature": "trial",
+      "secondaryFeature": "arm"
+    }
+  ],
+  "forcedChoiceMode": "none",
+  "noiseMode": "low",
+  "blockMessage": [
+    "In this session, the reward options yield changes across time."
+  ]
+}
+```
+
+Social cover story, numeric reward, 25 trials, 4 arms.\
+1 context (spaceship state), 4 values of armCategorical (shape), 1 value of armOrdered (number of eyes).\
+**For each arm, the reward changes smoothly across trials, while different arms have different mapping patterns (using different sampling seeds).**\
+Rewards are sampled around the medium level (50), meaning all rewards will not be too high or too low.\
+There is no forced choice.\
+Low noise ($\sigma = 10$) is applied to all arms.
+:::
+
+5.  [Multi-Armed Bandit](http://137.184.115.81/publix/YfagcYg6GMz) [(Bai et al., 2022)](https://drive.google.com/open?id=12trBIDMJrUarG8nT9tj9Jureis_eFokP)
+
+::: {.callout-caution title="Implementation Details" style="background-color: #EEF7EA;" collapse="true"}
+``` json
+{
+  "TASK": "multi-armed bandit",
+  "COVER_STORY": "social",
+  "REWARD_TYPE": "numeric",
+  "NUM_TRIALS": 15,
+  "NUM_ARMS": 4,
+  "allVarInfo": {
+    "context": {
+      "name": "context",
+      "type": "trial",
+      "numberLevels": 1
+    },
+    "armCategorical": {
+      "name": "armCategorical",
+      "type": "arm",
+      "numberLevels": 4
+    },
+    "armOrdered": {
+      "name": "armOrdered",
+      "type": "arm",
+      "numberLevels": 1
+    }
+  },
+  "allRewardInfo": [
+    {
+      "mappingStructure": [
+        "arm"
+      ],
+      "mappingFunction": {
+        "generalization": "identical",
+        "level": "medium"
+      },
+      "primaryFeature": "arm",
+      "secondaryFeature": ""
+    }
+  ],
+  "forcedChoiceMode": "none",
+  "noiseMode": "low"
+}
+```
+
+Social cover story, numeric reward, 15 trials, 4 arms.\
+1 context (spaceship state), 4 values of armCategorical (shape), 1 value of armOrdered (number of eyes).\
+**Rewards for arms are identical.**\
+Rewards are sampled around the medium level (50), meaning all rewards will not be too high or too low.\
+There is no forced choice.\
+Low noise ($\sigma = 10$) is applied to all arms.
+:::
+
+6.  [Asymmetric Noise](http://137.184.115.81/publix/xRX7IkhJMMF) [(Gershman 2018)](https://drive.google.com/open?id=1BEeSga36MMx07csGd-ozWGfwBKCDzSRj)
+
+::: {.callout-caution title="Implementation Details" style="background-color: #EEF7EA;" collapse="true"}
+``` json
+{
+  "TASK": "multi-armed bandit",
+  "COVER_STORY": "social",
+  "REWARD_TYPE": "numeric",
+  "NUM_TRIALS": 15,
+  "NUM_ARMS": 2,
+  "allVarInfo": {
+    "context": {
+      "name": "context",
+      "type": "trial",
+      "numberLevels": 1
+    },
+    "armCategorical": {
+      "name": "armCategorical",
+      "type": "arm",
+      "numberLevels": 2
+    },
+    "armOrdered": {
+      "name": "armOrdered",
+      "type": "arm",
+      "numberLevels": 1
+    }
+  },
+  "allRewardInfo": [
+    {
+      "mappingStructure": [
+        "arm"
+      ],
+      "mappingFunction": {
+        "generalization": "identical",
+        "level": "medium"
+      },
+      "primaryFeature": "arm",
+      "secondaryFeature": ""
+    }
+  ],
+  "forcedChoiceMode": "none",
+  "noiseMode": "different",
+  "blockMessage": [
+    "In this session, the predictability of reward yield varies between options.",
+    "Some options are more difficult to predict, represented by a greater amount of noises."
+  ]
+}
+```
+
+Social cover story, numeric reward, 15 trials, 2 arms.\
+1 context (spaceship state), 2 values of armCategorical (shape), 1 value of armOrdered (number of eyes).\
+Rewards for arms are identical\
+Rewards are sampled around the medium level (50), meaning all rewards will not be too high or too low.\
+There is no forced choice.\
+**Arms have different noise levels, $\sigma$ sampled from 0, 10, 20.**
+:::
+
+7.  [Learning Trap](http://137.184.115.81/publix/Cw88G5rVELR) [(Fazio et al., 2004)](https://drive.google.com/open?id=1ZXT5bwXYvu4299TUAd-hdPZMMJum_Uyq)
+
+::: {.callout-caution title="Implementation Details" style="background-color: #EEF7EA;" collapse="true"}
+``` json
+{
+  "TASK": "learning trap",
+  "COVER_STORY": "social",
+  "REWARD_TYPE": "numeric",
+  "NUM_TRIALS": 25,
+  "NUM_ARMS": 8,
+  "allVarInfo": {
+    "context": {
+      "name": "context",
+      "type": "trial",
+      "numberLevels": 1
+    },
+    "armCategorical": {
+      "name": "armCategorical",
+      "type": "arm",
+      "numberLevels": 3
+    },
+    "armOrdered": {
+      "name": "armOrdered",
+      "type": "arm",
+      "numberLevels": 3
+    }
+  },
+  "allRewardInfo": [
+    {
+      "mappingStructure": [
+        "arm"
+      ],
+      "mappingFunction": {
+        "generalization": "independent",
+        "level": "medium"
+      },
+      "primaryFeature": "armCategorical",
+      "secondaryFeature": ""
+    }
+  ],
+  "forcedChoiceMode": "none",
+  "noiseMode": "low",
+  "blockMessage": [
+    "In this session, there are some connections between the features of the options and the reward they yield.",
+    "Only one dimension of feature is associated, while another dimension is unrelated."
+  ]
+}
+```
+
+Social cover story, numeric reward, 25 trials, 8 arms.\
+1 context (spaceship state), 3 values of armCategorical (shape), 3 values of armOrdered (number of eyes).\
+**Rewards depend on the armCategorical (shape), i.e. different shapes have independent rewards, while the armOrdered (number of eyes) is unrelated.**\
+Rewards are sampled around the medium level (50), meaning all rewards will not be too high or too low.\
+There is no forced choice.\
+Low noise ($\sigma = 10$) is applied to all arms. 
+:::
+
+
+8.  [Optimal Stopping](http://137.184.115.81/publix/csCc3JAjeTK) [(Sang et al., 2020)](https://drive.google.com/open?id=1RBvm5E85gEaL_2QnbAmW3KaJIGniQ-Q3)
+
+::: {.callout-caution title="Implementation Details" style="background-color: #EEF7EA;" collapse="true"}
+``` json
+{
+  "TASK": "optimal stopping",
+  "COVER_STORY": "social",
+  "REWARD_TYPE": "numeric",
+  "NUM_TRIALS": 5,
+  "NUM_ARMS": 8,
+  "allVarInfo": {
+    "context": {
+      "name": "context",
+      "type": "trial",
+      "numberLevels": 1
+    },
+    "armCategorical": {
+      "name": "armCategorical",
+      "type": "arm",
+      "numberLevels": 1
+    },
+    "armOrdered": {
+      "name": "armOrdered",
+      "type": "arm",
+      "numberLevels": 1
+    }
+  },
+  "allRewardInfo": [
+    {
+      "mappingStructure": [
+        "arm"
+      ],
+      "mappingFunction": {
+        "generalization": "indepedent",
+        "level": "medium"
+      },
+      "primaryFeature": "arm",
+      "secondaryFeature": ""
+    }
+  ],
+  "forcedChoiceMode": "none",
+  "noiseMode": "none",
+  "blockMessage": [
+    "In this session, each option provides a fixed reward."
+  ]
+}
+```
+Social cover story, numeric reward, 5 trials, 8 arms.\
+1 context (spaceship state), 1 value of armCategorical (shape), 1 value of armOrdered (number of eyes).\
+Different arms have independent rewards.\
+Rewards are sampled around the medium level (50), meaning all rewards will not be too high or too low.  There is no forced choice.\
+**No noise is applied.** 
+:::
