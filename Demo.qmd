@@ -4,24 +4,6 @@ title: "Demos"
 
 Here are several demos of the bandit task:
 
-## By Condition
-
-### Social Tasks
-
-Social cover story: Alien communication
-
-1.  [Social Binary Task](http://137.184.115.81/publix/fyW5v1DP847). Binary reward
-
-2.  [Social Numeric Task](http://137.184.115.81/publix/KdaZiyI3T85). Numeric reward
-
-### Non-social Tasks
-
-Non-social cover story: planet travel
-
-1.  [Non-social Binary Task](http://137.184.115.81/publix/Y6mYGqX0TqR). Binary reward
-
-2.  [Non-social Numeric Task](http://137.184.115.81/publix/DpJTSqPzijA). Numeric reward
-
 ## By Task
 
 Those examples use social cover story and numeric reward:
@@ -475,3 +457,24 @@ Different arms have independent rewards.\
 Rewards are sampled around the medium level (50), meaning all rewards will not be too high or too low.  There is no forced choice.\
 **No noise is applied.** 
 :::
+
+
+
+## By Condition
+
+### Social Tasks
+
+Social cover story: Alien communication
+
+1.  [Social Binary Task](http://137.184.115.81/publix/fyW5v1DP847). Binary reward
+
+2.  [Social Numeric Task](http://137.184.115.81/publix/KdaZiyI3T85). Numeric reward
+
+### Non-social Tasks
+
+Non-social cover story: planet travel
+
+1.  [Non-social Binary Task](http://137.184.115.81/publix/Y6mYGqX0TqR). Binary reward
+
+2.  [Non-social Numeric Task](http://137.184.115.81/publix/DpJTSqPzijA). Numeric reward
+
