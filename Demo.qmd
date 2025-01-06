@@ -1,0 +1,40 @@
+---
+title: "Demos"
+---
+
+Here are several demos of the bandit task:
+
+
+## By Condition
+
+### Social Tasks
+Social cover story: Alien communication
+
+1. [Social Binary Task](http://137.184.115.81/publix/fyW5v1DP847). Binary reward
+
+2. [Social Numeric Task](http://137.184.115.81/publix/KdaZiyI3T85). Numeric reward
+
+### Non-social Tasks
+Non-social cover story: planet travel
+
+1. [Non-social Binary Task](http://137.184.115.81/publix/Y6mYGqX0TqR). Binary reward
+
+2. [Non-social Numeric Task](http://137.184.115.81/publix/DpJTSqPzijA). Numeric reward
+
+
+## By Task
+Those examples use social cover story and numeric reward:
+
+1. [Horizon Task](http://137.184.115.81/publix/WHaNLnRDR95)
+
+2. [Structural Bandit](http://137.184.115.81/publix/KxZYij6oMRD)
+
+3. [Contextual Bandit](http://137.184.115.81/publix/GNtr0GraSdw)
+
+4. [Restless Bandit](http://137.184.115.81/publix/7LtVJgCbbxL)
+
+5. [Multi-Armed Bandit](http://137.184.115.81/publix/YfagcYg6GMz)
+
+6. [Asymmetric Noise (Gershman, 2018)](http://137.184.115.81/publix/xRX7IkhJMMF)
+
+6. [Learning Trap](http://137.184.115.81/publix/Cw88G5rVELR)
